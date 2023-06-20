@@ -1,0 +1,58 @@
+Table users {
+  id integer
+  username varchar
+  firstName varchar
+  lastName varchar
+  email varchar
+  phone varchar
+  hashPassword varchar
+  address varchar
+  role varchar
+  created_at timestamp 
+}
+
+Table products {
+  id integer
+  vendor varchar
+  productName varchar
+  quantity integer
+  price integer
+}
+
+Table orders {
+  id integer
+  customer varchar
+  created_at timestamp
+  shipper varchar
+}
+
+Table orderDetails {
+  id integer
+  order varchar
+  product varchar
+  quantity integer
+}
+
+Table shippers {
+  id integer
+  phone varchar
+  orders varchar
+}
+
+Table addresses {
+  id integer
+  user varchar
+  street varchar
+  houseNumber integer
+  city varchar
+  postalCode integer
+  country varchar
+}
+
+
+Ref: products.vendor > users.id // many-to-one
+Ref: orders.customer > users.id
+Ref: orders.shipper > shippers.id
+Ref: orderDetails.order > orders.id
+Ref: orderDetails.product - products.id
+Ref: addresses.user > users.address
