@@ -6,29 +6,29 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class UserDto {
+public class ProfileDto {
     private int id;
     private String username;
+    private String firstName;
+    private String lastName;
     private String email;
+    private String phone;
+    private String createdDateTime;
+    private String role;
 
-    public static UserDto from(User user) {
-        return UserDto.builder()
+    public static ProfileDto from(User user) {
+        return ProfileDto.builder()
             .id(user.getId())
             .username(user.getUsername())
+            .firstName(user.getFirstName())
+            .lastName(user.getLastName())
             .email(user.getEmail())
+            .role(user.getRole().name())
+            .createdDateTime(user.getCreatedDate().toString())
             .build();
-    }
-
-    public static List<UserDto> from(List<User> users) {
-        return users.stream()
-            .map(UserDto::from)
-            .collect(Collectors.toList());
     }
 }
