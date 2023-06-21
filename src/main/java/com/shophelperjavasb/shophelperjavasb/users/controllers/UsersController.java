@@ -31,13 +31,19 @@ public class UsersController implements UsersApi {
         return ResponseEntity.ok(usersService.getAll());
     }
 
-//    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated()")
     @Override
     public ResponseEntity<ProfileDto> getProfile(AuthenticatedUser currentUser) {
         int currentUserId = currentUser.getUser().getId();
         ProfileDto profile = usersService.getProfile(currentUserId);
 
         return ResponseEntity.ok(profile);
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @Override
+    public ResponseEntity<UserDto> getUser(int userId) {
+        return ResponseEntity.ok(usersService.getUser(userId));
     }
 
 }

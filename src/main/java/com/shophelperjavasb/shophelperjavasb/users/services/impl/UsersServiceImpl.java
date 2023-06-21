@@ -1,5 +1,6 @@
 package com.shophelperjavasb.shophelperjavasb.users.services.impl;
 
+import com.shophelperjavasb.shophelperjavasb.exceptions.NotFoundException;
 import com.shophelperjavasb.shophelperjavasb.users.dto.NewUserDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.ProfileDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.UserDto;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -25,6 +27,8 @@ public class UsersServiceImpl implements UsersService {
             .username(newUserDto.getUsername())
             .email(newUserDto.getEmail())
             .hashPassword(passwordEncoder.encode(newUserDto.getPassword()))
+            .role(User.Role.USER)
+            .createdDate(LocalDateTime.now())
             .build();
         usersRepository.save(user);
 
@@ -46,5 +50,13 @@ public class UsersServiceImpl implements UsersService {
             .orElseThrow(IllegalArgumentException::new);
 
         return ProfileDto.from(user);
+    }
+
+    @Override
+    public UserDto getUser(int userId) {
+        User user = usersRepository.findById(userId)
+            .orElseThrow(() -> new NotFoundException("User with id <" + userId + "> not found"));
+
+        return UserDto.from(user);
     }
 }

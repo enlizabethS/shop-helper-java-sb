@@ -13,4 +13,6 @@ public interface UsersService {
     UsersPage getAll();
 
     ProfileDto getProfile(int currentUserId);
+
+    UserDto getUser(int userId);
 }
