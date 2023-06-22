@@ -7,10 +7,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -18,7 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder
-public class User {
+public class User implements UserDetails {
     public enum Role {ADMIN, USER}
 
     @Id
@@ -31,6 +34,8 @@ public class User {
     @NotNull
     private String email;
     private String phone;
+
+    private boolean active;
     @NotNull
     private String hashPassword;
     @NotNull
@@ -44,4 +49,42 @@ public class User {
 
     @Enumerated(value = EnumType.STRING) // чтобы хранил в БД как строку, а не число
     private Role role;
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getPassword() {
+        return hashPassword;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return active;
+    }
 }
