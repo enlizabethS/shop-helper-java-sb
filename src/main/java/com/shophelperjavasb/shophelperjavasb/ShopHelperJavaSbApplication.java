@@ -18,14 +18,4 @@ public class ShopHelperJavaSbApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ShopHelperJavaSbApplication.class, args);
 	}
-
-	@Bean
-	public OpenAPI baseOpenApi() {
-		return new OpenAPI().info(new Info()
-			.title("Shop-helper")
-			.version("1.0.0")
-			.title("Shop REST API")
-		);
-	}
-
 }

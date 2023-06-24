@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.*;
 })
 @RequestMapping("/api/users")
 public interface UsersApi {
-    @PostMapping("/signUp")
-    ResponseEntity<UserDto> signUp(@RequestBody NewUserDto newUserDto);
-
     @GetMapping
     ResponseEntity<UsersPage> getAll();
 

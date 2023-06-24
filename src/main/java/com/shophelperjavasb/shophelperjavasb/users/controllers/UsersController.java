@@ -19,12 +19,6 @@ import java.util.List;
 public class UsersController implements UsersApi {
     private final UsersService usersService;
 
-    @Override
-    public ResponseEntity<UserDto> signUp(NewUserDto newUserDto) {
-        return ResponseEntity.status(201)
-            .body(usersService.signUp(newUserDto));
-    }
-
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public ResponseEntity<UsersPage> getAll() {
