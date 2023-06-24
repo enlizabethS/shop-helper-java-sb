@@ -28,14 +28,27 @@ public class SecurityConfig {
         httpSecurity.authorizeRequests()
             .antMatchers("/swagger-ui/**").permitAll()
             .antMatchers("/v3/api-docs/**").permitAll()
-            .antMatchers("/api/users/signUp").permitAll()
+            .antMatchers("/api/auth/signup").permitAll()
             .anyRequest().authenticated()
             .and()
+//            .formLogin(form -> form
+//                .loginProcessingUrl("/api/auth/login")
+//                .permitAll()
+//                .defaultSuccessUrl("/swagger-ui/index.html")
+//                .failureUrl("/login?error=true")
+//            )
             .formLogin()
+            .loginProcessingUrl("/api/auth/login")
             .defaultSuccessUrl("/swagger-ui/index.html")
+            .failureUrl("/login?error=true")
             .and()
             .exceptionHandling()
-            .defaultAuthenticationEntryPointFor(new Http403ForbiddenEntryPoint(), new AntPathRequestMatcher("/api/**"));
+            .defaultAuthenticationEntryPointFor(new Http403ForbiddenEntryPoint(), new AntPathRequestMatcher("/api/**"))
+            .and()
+            .logout()
+            .logoutUrl("/api/auth/logout")
+//            .deleteCookies("JSESSIONID")
+        ;
 
         return httpSecurity.build();
     }

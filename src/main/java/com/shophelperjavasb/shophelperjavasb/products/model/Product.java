@@ -1,7 +1,5 @@
 package com.shophelperjavasb.shophelperjavasb.products.model;
 
-import com.shophelperjavasb.shophelperjavasb.addresses.model.Address;
-import com.shophelperjavasb.shophelperjavasb.purchaseDetails.model.PurchaseDetails;
 import com.shophelperjavasb.shophelperjavasb.users.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

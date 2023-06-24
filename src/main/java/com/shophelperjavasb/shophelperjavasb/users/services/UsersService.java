@@ -1,6 +1,5 @@
 package com.shophelperjavasb.shophelperjavasb.users.services;
 
-import com.shophelperjavasb.shophelperjavasb.users.dto.NewUserDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.ProfileDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.UserDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.UsersPage;
@@ -11,11 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.List;
-
 public interface UsersService {
-    UserDto signUp(NewUserDto newUserDto);
-
     UsersPage getAll();
 
     ProfileDto getProfile(int currentUserId);

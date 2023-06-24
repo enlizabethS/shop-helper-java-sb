@@ -27,20 +27,6 @@ public class UsersServiceImpl implements UsersService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserDto signUp(NewUserDto newUserDto) {
-        User user = User.builder()
-            .username(newUserDto.getUsername())
-            .email(newUserDto.getEmail())
-            .hashPassword(passwordEncoder.encode(newUserDto.getPassword()))
-            .role(User.Role.USER)
-            .createdDate(LocalDateTime.now())
-            .build();
-        usersRepository.save(user);
-
-        return UserDto.from(user);
-    }
-
-    @Override
     public UsersPage getAll() {
         List<User> users = usersRepository.findAll();
 
