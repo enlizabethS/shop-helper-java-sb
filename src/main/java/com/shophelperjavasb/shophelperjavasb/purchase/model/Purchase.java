@@ -1,7 +1,6 @@
 package com.shophelperjavasb.shophelperjavasb.purchase.model;
 
 import com.shophelperjavasb.shophelperjavasb.products.model.Product;
-import com.shophelperjavasb.shophelperjavasb.purchaseDetails.model.PurchaseDetails;
 import com.shophelperjavasb.shophelperjavasb.shippers.model.Shipper;
 import com.shophelperjavasb.shophelperjavasb.users.model.User;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -20,6 +18,12 @@ import java.util.List;
 @Data
 @Builder
 public class Purchase {
+    public enum Status {
+        CREATED,
+        PERFORMED,
+        DONE
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -28,8 +32,9 @@ public class Purchase {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
     @NotNull
-    @OneToMany(mappedBy = "id", targetEntity = PurchaseDetails.class)
-    private List<PurchaseDetails> purchaseDetails;
+    @OneToOne
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    private Product product;
     @NotNull
     private int quantity;
     @NotNull
@@ -37,4 +42,6 @@ public class Purchase {
     @ManyToOne
     @JoinColumn(name = "shipper_id", referencedColumnName = "id")
     private Shipper shipper;
+    @Enumerated(value = EnumType.STRING)
+    private Status status;
 }
