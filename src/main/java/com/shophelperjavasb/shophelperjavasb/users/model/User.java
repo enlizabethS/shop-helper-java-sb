@@ -2,7 +2,7 @@ package com.shophelperjavasb.shophelperjavasb.users.model;
 
 import com.shophelperjavasb.shophelperjavasb.addresses.model.Address;
 import com.shophelperjavasb.shophelperjavasb.products.model.Product;
-import com.shophelperjavasb.shophelperjavasb.purchase.model.Purchase;
+import com.shophelperjavasb.shophelperjavasb.purchases.model.Purchase;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,9 +37,9 @@ public class User {
     private LocalDateTime createdDate;
     @OneToOne(mappedBy = "user", targetEntity = Address.class)
     private Address address;
-    @OneToMany(mappedBy = "id", targetEntity = Product.class)
+    @OneToMany(mappedBy = "user", targetEntity = Product.class)
     private List<Product> products;
-    @OneToMany(mappedBy = "id", targetEntity = Purchase.class)
+    @OneToMany(mappedBy = "user")
     private List<Purchase> purchases;
 
     @Enumerated(value = EnumType.STRING) // чтобы хранил в БД как строку, а не число

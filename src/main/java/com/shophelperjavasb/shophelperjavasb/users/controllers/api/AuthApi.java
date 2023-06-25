@@ -32,6 +32,6 @@ public interface AuthApi {
     @PostMapping("/login")
     void login();
 
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     void logout();
 }

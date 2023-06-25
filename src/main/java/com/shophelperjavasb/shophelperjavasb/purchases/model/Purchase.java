@@ -1,4 +1,4 @@
-package com.shophelperjavasb.shophelperjavasb.purchase.model;
+package com.shophelperjavasb.shophelperjavasb.purchases.model;
 
 import com.shophelperjavasb.shophelperjavasb.products.model.Product;
 import com.shophelperjavasb.shophelperjavasb.shippers.model.Shipper;

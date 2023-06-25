@@ -1,6 +1,6 @@
 package com.shophelperjavasb.shophelperjavasb.shippers.model;
 
-import com.shophelperjavasb.shophelperjavasb.purchase.model.Purchase;
+import com.shophelperjavasb.shophelperjavasb.purchases.model.Purchase;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +24,6 @@ public class Shipper {
     @NotNull
     private String phone;
     @NotNull
-    @OneToMany(mappedBy = "shipper", targetEntity = Purchase.class)
+    @OneToMany(mappedBy = "shipper")
     private List<Purchase> purchases;
 }
