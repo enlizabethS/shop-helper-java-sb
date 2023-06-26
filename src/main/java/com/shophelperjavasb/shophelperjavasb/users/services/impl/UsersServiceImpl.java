@@ -8,8 +8,10 @@ import com.shophelperjavasb.shophelperjavasb.users.model.User;
 import com.shophelperjavasb.shophelperjavasb.users.repositories.UsersRepository;
 import com.shophelperjavasb.shophelperjavasb.users.services.UsersService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 
 // @Slf4j
@@ -67,4 +69,5 @@ public class UsersServiceImpl implements UsersService {
 //         Session session = this.sessionFactory.getCurrentSession();
 //         session.update(user);
 //     }
+
 }
