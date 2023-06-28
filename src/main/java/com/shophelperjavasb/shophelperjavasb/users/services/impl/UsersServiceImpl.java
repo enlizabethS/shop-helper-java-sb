@@ -27,7 +27,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public ProfileDto getProfile(int currentUserId) {
+    public ProfileDto getProfile(Long currentUserId) {
         User user = usersRepository.findById(currentUserId)
             .orElseThrow(IllegalArgumentException::new);
 
@@ -35,7 +35,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public UserDto getUser(int userId) {
+    public UserDto getUser(Long userId) {
         User user = usersRepository.findById(userId)
             .orElseThrow(() -> new NotFoundException("User with id <" + userId + "> not found"));
 

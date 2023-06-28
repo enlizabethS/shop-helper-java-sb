@@ -30,8 +30,10 @@ public interface AuthApi {
     ResponseEntity<UserDto> signUp(@RequestBody NewUserDto newUserDto);
 
     @PostMapping("/login")
+    @CrossOrigin(origins = "http://localhost:3000")
     void login();
 
     @PostMapping("/logout")
+    @CrossOrigin(origins = "http://localhost:3000")
     void logout();
 }

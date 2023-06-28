@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 public class PurchaseDto {
     @Schema(description = "id of the purchase")
-    private int id;
+    private Long id;
     @Schema(description = "number of products")
     private int quantity;
     @Schema(description = "purchase creation date")

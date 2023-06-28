@@ -28,7 +28,7 @@ public class UsersController implements UsersApi {
     @PreAuthorize("isAuthenticated()")
     @Override
     public ResponseEntity<ProfileDto> getProfile(AuthenticatedUser currentUser) {
-        int currentUserId = currentUser.getUser().getId();
+        Long currentUserId = currentUser.getUser().getId();
         ProfileDto profile = usersService.getProfile(currentUserId);
 
         return ResponseEntity.ok(profile);
@@ -36,7 +36,7 @@ public class UsersController implements UsersApi {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
-    public ResponseEntity<UserDto> getUser(int userId) {
+    public ResponseEntity<UserDto> getUser(Long userId) {
         return ResponseEntity.ok(usersService.getUser(userId));
     }
 

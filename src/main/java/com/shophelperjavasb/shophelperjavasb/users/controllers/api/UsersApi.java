@@ -24,5 +24,5 @@ public interface UsersApi {
     ResponseEntity<ProfileDto> getProfile(@Parameter(hidden = true) @AuthenticationPrincipal AuthenticatedUser currentUser);
 
     @GetMapping("/{user-id}")
-    ResponseEntity<UserDto> getUser(@PathVariable("user-id") int userId);
+    ResponseEntity<UserDto> getUser(@PathVariable("user-id") Long userId);
 }

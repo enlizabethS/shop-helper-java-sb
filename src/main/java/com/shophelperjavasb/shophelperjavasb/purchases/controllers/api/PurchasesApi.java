@@ -41,7 +41,7 @@ public interface PurchasesApi {
                     schema = @Schema(implementation = PurchaseDto.class))})}
     )
     @GetMapping("/{purchase-id}")
-    ResponseEntity<PurchaseDto> getById(@PathVariable("purchase-id") int purchaseId);
+    ResponseEntity<PurchaseDto> getById(@PathVariable("purchase-id") Long purchaseId);
 
     @Operation(summary = "Update by id", description = "Update the entire purchase item by id")
     @ApiResponses(value = {
@@ -51,7 +51,7 @@ public interface PurchasesApi {
                     schema = @Schema(implementation = PurchaseDto.class))})}
     )
     @PutMapping("/{purchase-id}")
-    ResponseEntity<PurchaseDto> updateById(@PathVariable("purchase-id") int purchaseId, @RequestBody NewPurchaseDto newPurchaseDto);
+    ResponseEntity<PurchaseDto> updateById(@PathVariable("purchase-id") Long purchaseId, @RequestBody NewPurchaseDto newPurchaseDto);
 
     @Operation(summary = "Update status", description = "Update purchase status by id")
     @ApiResponses(value = {
@@ -61,5 +61,5 @@ public interface PurchasesApi {
                     schema = @Schema(implementation = PurchaseDto.class))})}
     )
     @PatchMapping("/{purchase-id}")
-    ResponseEntity<PurchaseDto> updateStatus(@PathVariable("purchase-id") int purchaseId, @RequestBody StatusPurchaseDto newStatus);
+    ResponseEntity<PurchaseDto> updateStatus(@PathVariable("purchase-id") Long purchaseId, @RequestBody StatusPurchaseDto newStatus);
 }

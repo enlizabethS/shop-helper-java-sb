@@ -10,13 +10,13 @@ public interface PurchasesService {
         AuthenticatedUser currentUser,
         NewPurchaseDto newPurchaseDto);
 
-    PurchaseDto getById(int purchaseId);
+    PurchaseDto getById(Long purchaseId);
 
     PurchaseDto updateById(
-        int purchaseId,
+        Long purchaseId,
         NewPurchaseDto newPurchaseDto);
 
     PurchaseDto updateStatus(
-        int purchaseId,
+        Long purchaseId,
         StatusPurchaseDto newStatus);
 }

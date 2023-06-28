@@ -53,7 +53,7 @@ public class PurchasesServiceImpl implements PurchasesService {
     }
 
     @Override
-    public PurchaseDto getById(int purchaseId) {
+    public PurchaseDto getById(Long purchaseId) {
         Purchase purchase = purchasesRepository.findById(purchaseId)
             .orElseThrow(() -> new NotFoundException("Purchase with id <" + purchaseId + "> not found"));
 
@@ -61,7 +61,7 @@ public class PurchasesServiceImpl implements PurchasesService {
     }
 
     @Override
-    public PurchaseDto updateById(int purchaseId, NewPurchaseDto newPurchaseDto) {
+    public PurchaseDto updateById(Long purchaseId, NewPurchaseDto newPurchaseDto) {
         Purchase originPurchase = purchasesRepository.findById(purchaseId)
             .orElseThrow(() -> new NotFoundException("Purchase with id <" + purchaseId + "> not found"));
 
@@ -73,7 +73,7 @@ public class PurchasesServiceImpl implements PurchasesService {
     }
 
     @Override
-    public PurchaseDto updateStatus(int purchaseId, StatusPurchaseDto newStatus) {
+    public PurchaseDto updateStatus(Long purchaseId, StatusPurchaseDto newStatus) {
         Purchase originPurchase = purchasesRepository.findById(purchaseId)
             .orElseThrow(() -> new NotFoundException("Purchase with id <" + purchaseId + "> not found"));
 

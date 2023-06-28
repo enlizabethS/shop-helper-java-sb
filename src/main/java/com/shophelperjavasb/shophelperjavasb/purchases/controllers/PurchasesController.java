@@ -31,20 +31,20 @@ public class PurchasesController implements PurchasesApi {
 
     @PreAuthorize("isAuthenticated()")
     @Override
-    public ResponseEntity<PurchaseDto> getById(int purchaseId) {
+    public ResponseEntity<PurchaseDto> getById(Long purchaseId) {
         return ResponseEntity.ok(purchasesService.getById(purchaseId));
     }
 
     @PreAuthorize("isAuthenticated()")
     @Override
-    public ResponseEntity<PurchaseDto> updateById(int purchaseId, NewPurchaseDto newPurchaseDto) {
+    public ResponseEntity<PurchaseDto> updateById(Long purchaseId, NewPurchaseDto newPurchaseDto) {
         return ResponseEntity.status(200)
             .body(purchasesService.updateById(purchaseId, newPurchaseDto));
     }
 
     @PreAuthorize("isAuthenticated()")
     @Override
-    public ResponseEntity<PurchaseDto> updateStatus(int purchaseId, StatusPurchaseDto newStatus) {
+    public ResponseEntity<PurchaseDto> updateStatus(Long purchaseId, StatusPurchaseDto newStatus) {
         return ResponseEntity.status(200)
             .body(purchasesService.updateStatus(purchaseId, newStatus));
     }
