@@ -29,9 +29,9 @@ public interface AuthApi {
     @PostMapping("/signup")
     ResponseEntity<UserDto> signUp(@RequestBody NewUserDto newUserDto);
 
-    @PostMapping("/login")
+    @PostMapping("/signin")
     void login();
 
-    @PostMapping("/logout")
+    @PostMapping("/signout")
     void logout();
 }
