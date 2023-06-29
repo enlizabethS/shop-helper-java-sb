@@ -1,8 +1,15 @@
 package com.shophelperjavasb.shophelperjavasb.products.services;
 
+import com.shophelperjavasb.shophelperjavasb.exceptions.NotFoundException;
+import com.shophelperjavasb.shophelperjavasb.products.dto.ProductDTO;
+import com.shophelperjavasb.shophelperjavasb.products.dto.ProductPage;
+import com.shophelperjavasb.shophelperjavasb.products.dto.ProductProfileDTO;
 import com.shophelperjavasb.shophelperjavasb.products.model.Image;
 import com.shophelperjavasb.shophelperjavasb.products.model.Product;
 import com.shophelperjavasb.shophelperjavasb.products.repositories.ProductsRepository;
+import com.shophelperjavasb.shophelperjavasb.users.dto.ProfileDto;
+import com.shophelperjavasb.shophelperjavasb.users.dto.UserDto;
+import com.shophelperjavasb.shophelperjavasb.users.dto.UsersPage;
 import com.shophelperjavasb.shophelperjavasb.users.model.User;
 import com.shophelperjavasb.shophelperjavasb.users.repositories.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,13 +24,36 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class ProductService {
+public class ProductService implements ProductServices{
     private final ProductsRepository productsRepository;
     private final UsersRepository usersRepository;
 
     public List<Product> listProducts(String title) {
         if (title != null) return productsRepository.findByTitle(title);
         return productsRepository.findAll();
+    }
+    @Override
+    public ProductPage getAll() {
+        List<Product> products = productsRepository.findAll();
+
+        return ProductPage.builder()
+                .products(ProductDTO.from(products))
+                .build();
+    }
+    @Override
+    public ProductProfileDTO getProfile(int currentProductId){
+        Product product = productsRepository.findById(currentProductId)
+                .orElseThrow(IllegalArgumentException::new);
+
+        return ProductProfileDTO.from(product);
+    }
+
+    @Override
+    public ProductDTO getProduct(int productId) {
+        Product product = productsRepository.findById(productId)
+                .orElseThrow(() -> new NotFoundException("Product with id <" + productId+ "> not found"));
+
+        return ProductDTO.from(product);
     }
 
     public void saveProduct(Principal principal, Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {
