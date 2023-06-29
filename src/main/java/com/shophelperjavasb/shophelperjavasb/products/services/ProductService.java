@@ -28,8 +28,8 @@ public class ProductService implements ProductServices{
     private final ProductsRepository productsRepository;
     private final UsersRepository usersRepository;
 
-    public List<Product> listProducts(String title) {
-        if (title != null) return productsRepository.findByTitle(title);
+    public List<Product> listProducts (String productName) {
+        if (productName != null) return productsRepository.findByName(productName);
         return productsRepository.findAll();
     }
     @Override
