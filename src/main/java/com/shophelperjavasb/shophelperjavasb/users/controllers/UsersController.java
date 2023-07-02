@@ -39,11 +39,12 @@ public class UsersController implements UsersApi {
 
         return ResponseEntity.ok(profile);
     }
-
+    @Override
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<UserDto> getUser( Long userId) {
         return ResponseEntity.ok(usersService.getUser(userId));
     }
+    @Override
     public ResponseEntity<String> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
         User existingUser = usersService.getUserById(userId);
 

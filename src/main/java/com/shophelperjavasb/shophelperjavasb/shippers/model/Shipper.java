@@ -1,15 +1,14 @@
 package com.shophelperjavasb.shophelperjavasb.shippers.model;
 
 import com.shophelperjavasb.shophelperjavasb.purchases.model.Purchase;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,7 +17,7 @@ import java.util.List;
 public class Shipper {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @NotNull
     private String shipperName;
     @NotNull
@@ -26,4 +25,8 @@ public class Shipper {
     @NotNull
     @OneToMany(mappedBy = "shipper")
     private List<Purchase> purchases;
+    private boolean selfPickUp;
+    public boolean isSelfPickUp() {
+        return selfPickUp;
+    }
 }
