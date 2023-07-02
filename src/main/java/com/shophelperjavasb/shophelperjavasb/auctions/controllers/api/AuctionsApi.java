@@ -1,6 +1,7 @@
 package com.shophelperjavasb.shophelperjavasb.auctions.controllers.api;
 
 import com.shophelperjavasb.shophelperjavasb.auctions.dto.AuctionDto;
+import com.shophelperjavasb.shophelperjavasb.auctions.dto.BidDto;
 import com.shophelperjavasb.shophelperjavasb.auctions.dto.NewAuctionDto;
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +15,8 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tags(value = {
     @Tag(name = "Auctions")
@@ -61,4 +64,14 @@ public interface AuctionsApi {
     )
     @PutMapping("/{auction-id}")
     ResponseEntity<AuctionDto> updateBids(@PathVariable("auction-id") Long auctionId, @RequestBody Long bidId);
+
+    @Operation(summary = "Get bids", description = "Get all bids by auction id")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Get all bids by auction id",
+            content = {
+                @Content(mediaType = "application/json",
+                    schema = @Schema(ref = "StandardResponseDto"))})}
+    )
+    @PutMapping("/{auction-id}/bids")
+    ResponseEntity<List<BidDto>> getBidsByAuction(@PathVariable("auction-id") Long auctionId);
 }

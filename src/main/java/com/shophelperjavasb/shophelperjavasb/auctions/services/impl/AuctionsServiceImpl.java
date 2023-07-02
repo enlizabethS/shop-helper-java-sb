@@ -1,6 +1,7 @@
 package com.shophelperjavasb.shophelperjavasb.auctions.services.impl;
 
 import com.shophelperjavasb.shophelperjavasb.auctions.dto.AuctionDto;
+import com.shophelperjavasb.shophelperjavasb.auctions.dto.BidDto;
 import com.shophelperjavasb.shophelperjavasb.auctions.dto.NewAuctionDto;
 import com.shophelperjavasb.shophelperjavasb.auctions.model.Auction;
 import com.shophelperjavasb.shophelperjavasb.auctions.model.Bid;
@@ -10,7 +11,7 @@ import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
 import com.shophelperjavasb.shophelperjavasb.exceptions.NotFoundException;
 import com.shophelperjavasb.shophelperjavasb.products.model.Product;
 import com.shophelperjavasb.shophelperjavasb.products.repositories.ProductsRepository;
-import com.shophelperjavasb.shophelperjavasb.purchases.repositories.AuctionsRepository;
+import com.shophelperjavasb.shophelperjavasb.auctions.repositories.AuctionsRepository;
 import com.shophelperjavasb.shophelperjavasb.users.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -90,5 +91,12 @@ public class AuctionsServiceImpl implements AuctionsService {
         auctionsRepository.save(auction);
 
         return AuctionDto.from(auction);
+    }
+
+    @Override
+    public List<BidDto> getBidsByAuction(Long auctionId) {
+        List<Bid> bids = bidsRepository.findAllByAuction_Id(auctionId);
+
+        return BidDto.from(bids);
     }
 }

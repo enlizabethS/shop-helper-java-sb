@@ -8,7 +8,7 @@ import com.shophelperjavasb.shophelperjavasb.auctions.repositories.BidsRepositor
 import com.shophelperjavasb.shophelperjavasb.auctions.services.BidsService;
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
 import com.shophelperjavasb.shophelperjavasb.exceptions.NotFoundException;
-import com.shophelperjavasb.shophelperjavasb.purchases.repositories.AuctionsRepository;
+import com.shophelperjavasb.shophelperjavasb.auctions.repositories.AuctionsRepository;
 import com.shophelperjavasb.shophelperjavasb.users.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

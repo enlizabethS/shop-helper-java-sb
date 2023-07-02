@@ -1,4 +1,4 @@
-package com.shophelperjavasb.shophelperjavasb.purchases.repositories;
+package com.shophelperjavasb.shophelperjavasb.auctions.repositories;
 
 import com.shophelperjavasb.shophelperjavasb.auctions.model.Auction;
 import org.springframework.data.jpa.repository.JpaRepository;
