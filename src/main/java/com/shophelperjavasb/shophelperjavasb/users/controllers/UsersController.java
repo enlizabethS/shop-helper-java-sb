@@ -6,6 +6,7 @@ import com.shophelperjavasb.shophelperjavasb.users.dto.UserDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.UserResponseDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.UsersPage;
 import com.shophelperjavasb.shophelperjavasb.users.controllers.api.UsersApi;
+import com.shophelperjavasb.shophelperjavasb.users.model.User;
 import com.shophelperjavasb.shophelperjavasb.users.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
@@ -43,15 +44,15 @@ public class UsersController implements UsersApi {
     }
     @Override
     public ResponseEntity<String> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
-        User existingUser = usersService.getUserById(userId);
+        User user = usersService.getUserById(userId);
 
-        if (existingUser == null) {
+        if (user == null) {
             return new ResponseEntity<>("User with ID " + userId + " not found", HttpStatus.NOT_FOUND);
         }
         // Обновляем данные пользователя
-        existingUser.setUsername(updatedUser.getUsername());
-        existingUser.setEmail(updatedUser.getEmail());
-        usersService.saveUser(existingUser);
+        user.setUsername(updatedUser.getUsername());
+        user.setEmail(updatedUser.getEmail());
+        usersService.saveUser(user);
 
         return new ResponseEntity<>("User update", HttpStatus.OK);
     }
