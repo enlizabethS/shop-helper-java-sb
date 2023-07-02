@@ -35,7 +35,7 @@ public class PurchasesServiceImpl implements PurchasesService {
         Product product = productsRepository.findById(newPurchaseDto.getProductId())
             .orElseThrow(() -> new NotFoundException("Purchase with id <" + newPurchaseDto.getProductId() + "> not found"));
 
-        Shipper shipper = shippersRepository.findById(newPurchaseDto.getShipperId())
+        Shipper shipper = shippersRepository.findById((long) newPurchaseDto.getShipperId())
             .orElseThrow(() -> new NotFoundException("Purchase with id <" + newPurchaseDto.getShipperId() + "> not found"));
 
         Purchase newPurchase = Purchase.builder()

@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,10 +19,19 @@ public class Shipper {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    @NotNull
+    private String shipperName;
     @NotNull
     private String phone;
     @NotNull
-    @OneToMany(mappedBy = "shipper", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Purchase> purchases = new ArrayList<>();
+    @OneToMany(mappedBy = "shipper")
+    private List<Purchase> purchases;
+    private boolean selfPickUp;
+    public boolean isSelfPickUp() {
+        return selfPickUp;
+    }
+
+    public void setSelfPickUp(boolean selfPickUp) {
+        this.selfPickUp = selfPickUp;
+    }
 }
