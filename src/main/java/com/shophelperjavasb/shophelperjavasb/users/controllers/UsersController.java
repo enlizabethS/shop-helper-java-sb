@@ -3,6 +3,7 @@ package com.shophelperjavasb.shophelperjavasb.users.controllers;
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
 import com.shophelperjavasb.shophelperjavasb.users.dto.ProfileDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.UserDto;
+import com.shophelperjavasb.shophelperjavasb.users.dto.UserResponseDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.UsersPage;
 import com.shophelperjavasb.shophelperjavasb.users.controllers.api.UsersApi;
 import com.shophelperjavasb.shophelperjavasb.users.services.UsersService;
@@ -30,7 +31,7 @@ public class UsersController implements UsersApi {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
-    public ResponseEntity<UserDto> getUser(Long userId) {
+    public ResponseEntity<UserResponseDto> getUser(Long userId) {
         return ResponseEntity.ok(usersService.getUser(userId));
     }
 

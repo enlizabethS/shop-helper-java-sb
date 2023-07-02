@@ -1,4 +1,4 @@
-package com.shophelperjavasb.shophelperjavasb.products.services;
+package com.shophelperjavasb.shophelperjavasb.products.services.impl;
 
 import com.shophelperjavasb.shophelperjavasb.exceptions.NotFoundException;
 import com.shophelperjavasb.shophelperjavasb.products.dto.ProductDTO;
@@ -7,9 +7,7 @@ import com.shophelperjavasb.shophelperjavasb.products.dto.ProductProfileDTO;
 import com.shophelperjavasb.shophelperjavasb.products.model.Image;
 import com.shophelperjavasb.shophelperjavasb.products.model.Product;
 import com.shophelperjavasb.shophelperjavasb.products.repositories.ProductsRepository;
-import com.shophelperjavasb.shophelperjavasb.users.dto.ProfileDto;
-import com.shophelperjavasb.shophelperjavasb.users.dto.UserDto;
-import com.shophelperjavasb.shophelperjavasb.users.dto.UsersPage;
+import com.shophelperjavasb.shophelperjavasb.products.services.ProductsService;
 import com.shophelperjavasb.shophelperjavasb.users.model.User;
 import com.shophelperjavasb.shophelperjavasb.users.repositories.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,14 +22,16 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class ProductService implements ProductServices{
+public class ProductsServiceImpl implements ProductsService {
     private final ProductsRepository productsRepository;
     private final UsersRepository usersRepository;
 
+    @Override
     public List<Product> listProducts (String productName) {
         if (productName != null) return productsRepository.findByName(productName);
         return productsRepository.findAll();
     }
+
     @Override
     public ProductPage getAll() {
         List<Product> products = productsRepository.findAll();
@@ -41,7 +41,7 @@ public class ProductService implements ProductServices{
                 .build();
     }
     @Override
-    public ProductProfileDTO getProfile(int currentProductId){
+    public ProductProfileDTO getProfile(Long currentProductId){
         Product product = productsRepository.findById(currentProductId)
                 .orElseThrow(IllegalArgumentException::new);
 
@@ -49,13 +49,14 @@ public class ProductService implements ProductServices{
     }
 
     @Override
-    public ProductDTO getProduct(int productId) {
+    public ProductDTO getProduct(Long productId) {
         Product product = productsRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException("Product with id <" + productId+ "> not found"));
 
         return ProductDTO.from(product);
     }
 
+    @Override
     public void saveProduct(Principal principal, Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {
         product.setUser(getUserByPrincipal(principal));
         Image image1;
@@ -74,16 +75,20 @@ public class ProductService implements ProductServices{
             image3 = toImageEntity(file3);
             product.addImageToProduct(image3);
         }
-        log.info("Saving new Product. Title: {}; Author email: {}", product.getProductName(), product.getUser().getEmail());
+        log.info("Saving new Product. Title: {}; Author email: {}", product.getName(), product.getUser().getEmail());
         Product productFromDb = productsRepository.save(product);
         productFromDb.setPreviewImageId(productFromDb.getImages().get(0).getId());
         productsRepository.save(product);
     }
+
+    @Override
     public User getUserByPrincipal (Principal principal) {
         if (principal == null) return new User();
         return usersRepository.findByEmail(principal.getName());
     }
-    private Image toImageEntity(MultipartFile file) throws IOException {
+
+    @Override
+    public Image toImageEntity(MultipartFile file) throws IOException {
         Image image = new Image();
         image.setName(file.getName());
         image.setOriginalFileName(file.getOriginalFilename());
@@ -93,7 +98,8 @@ public class ProductService implements ProductServices{
         return image;
     }
 
-    public void deleteProduct(User user, int id) {
+    @Override
+    public void deleteProduct(User user, Long id) {
         Product product = productsRepository.findById(id)
                 .orElse(null);
         if (product != null) {
@@ -108,7 +114,8 @@ public class ProductService implements ProductServices{
             log.error("Product with id = {} is not found", id);
         }    }
 
-    public Product getProductById(int id) {
+    @Override
+    public Product getProductById(Long id) {
         return productsRepository.findById(id).orElse(null);
     }
 

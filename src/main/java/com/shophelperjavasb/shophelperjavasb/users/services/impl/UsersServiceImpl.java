@@ -50,7 +50,7 @@ public class UsersServiceImpl implements UsersService {
         return UserResponseDto.from(user);
     }
   
-     public void banUser(int id) {
+     public void banUser(Long id) {
          User user = usersRepository.findById(id).orElse(null);
          if (user != null) {
              if (user.isActive()) {
@@ -70,6 +70,7 @@ public class UsersServiceImpl implements UsersService {
      public void setSessionFactory(SessionFactory sessionFactory) {
          this.sessionFactory = sessionFactory;
      }
+
      public void updateUser(User user) {
          Session session = this.sessionFactory.getCurrentSession();
          session.update(user);
