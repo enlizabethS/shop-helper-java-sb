@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -21,34 +22,45 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UsersServiceImpl implements UsersService {
-    private final UsersRepository usersRepository;
+     private final UsersRepository usersRepository;
 
-    @Override
-    public UsersPage getAll() {
-        List<User> users = usersRepository.findAll();
+     @Override
+     public UsersPage getAll() {
+         List<User> users = usersRepository.findAll();
 
-        return UsersPage.builder()
-            .users(UserDto.from(users))
-            .build();
-    }
+         return UsersPage.builder()
+                 .users(UserDto.from(users))
+                 .build();
+     }
 
-    @Override
-    public ProfileDto getProfile(int currentUserId) {
-        User user = usersRepository.findById(currentUserId)
-            .orElseThrow(IllegalArgumentException::new);
+     @Override
+     public ProfileDto getProfile(Long currentUserId) {
+         User user = usersRepository.findById(currentUserId)
+                 .orElseThrow(IllegalArgumentException::new);
 
-        return ProfileDto.from(user);
-    }
+         return ProfileDto.from(user);
+     }
 
-    @Override
-    public UserDto getUser(int userId) {
-        User user = usersRepository.findById(userId)
-            .orElseThrow(() -> new NotFoundException("User with id <" + userId + "> not found"));
+     @Override
+     public UserDto getUser(Long userId) {
+         User user = usersRepository.findById(userId)
+                 .orElseThrow(() -> new NotFoundException("User with id <" + userId + "> not found"));
 
-        return UserDto.from(user);
-    }
-  
-     public void banUser(int id) {
+         return UserDto.from(user);
+     }
+
+     @Override
+     public User getUserById(Long userId) {
+         return usersRepository.getUserById(userId);
+     }
+
+     @Override
+     public void saveUser(User existingUser) {
+         usersRepository.saveUser(existingUser);
+     }
+
+
+     public void banUser(Long id) {
          User user = usersRepository.findById(id).orElse(null);
          if (user != null) {
              if (user.isActive()) {
@@ -61,6 +73,6 @@ public class UsersServiceImpl implements UsersService {
          }
          usersRepository.save(user);
      }
+ }
 
 
-}

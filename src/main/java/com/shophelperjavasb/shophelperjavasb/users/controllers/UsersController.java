@@ -13,12 +13,10 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,7 +24,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UsersController implements UsersApi {
     private final UsersService usersService;
-    private final UsersServiceImpl usersServiceImpl;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
@@ -37,17 +34,28 @@ public class UsersController implements UsersApi {
     @PreAuthorize("isAuthenticated()")
     @Override
     public ResponseEntity<ProfileDto> getProfile(AuthenticatedUser currentUser) {
-        int currentUserId = currentUser.getUser().getId();
+        Long  currentUserId = currentUser.getUser().getId();
         ProfileDto profile = usersService.getProfile(currentUserId);
 
         return ResponseEntity.ok(profile);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @Override
-    public ResponseEntity<UserDto> getUser(int userId) {
+    public ResponseEntity<UserDto> getUser( Long userId) {
         return ResponseEntity.ok(usersService.getUser(userId));
     }
+    public ResponseEntity<String> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
+        User existingUser = usersService.getUserById(userId);
 
+        if (existingUser == null) {
+            return new ResponseEntity<>("User with ID " + userId + " not found", HttpStatus.NOT_FOUND);
+        }
+        // Обновляем данные пользователя
+        existingUser.setUsername(updatedUser.getUsername());
+        existingUser.setEmail(updatedUser.getEmail());
+        usersService.saveUser(existingUser);
 
+        return new ResponseEntity<>("User update", HttpStatus.OK);
+    }
 }
+
