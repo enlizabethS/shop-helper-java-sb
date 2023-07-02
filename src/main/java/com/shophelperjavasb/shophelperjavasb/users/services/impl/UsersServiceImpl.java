@@ -48,11 +48,6 @@ public class UsersServiceImpl implements UsersService {
          return usersRepository.getUserById(userId);
      }
 
-     @Override
-     public void saveUser(User user) {
-         usersRepository.saveUser(user);
-     }
-
 
 //     public void banUser(Long id) {
 //         User user = usersRepository.findById(id).orElse(null);
