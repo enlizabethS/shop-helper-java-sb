@@ -1,8 +1,10 @@
 package com.shophelperjavasb.shophelperjavasb.users.services.impl;
 
+import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
 import com.shophelperjavasb.shophelperjavasb.exceptions.NotFoundException;
 import com.shophelperjavasb.shophelperjavasb.users.dto.ProfileDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.UserDto;
+import com.shophelperjavasb.shophelperjavasb.users.dto.UserResponseDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.UsersPage;
 import com.shophelperjavasb.shophelperjavasb.users.model.User;
 import com.shophelperjavasb.shophelperjavasb.users.repositories.UsersRepository;
@@ -33,19 +35,19 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public ProfileDto getProfile(int currentUserId) {
-        User user = usersRepository.findById(currentUserId)
-            .orElseThrow(IllegalArgumentException::new);
+    public ProfileDto getProfile(AuthenticatedUser currentUser) {
+        User user = usersRepository.findById(currentUser.getUser().getId())
+            .orElseThrow(() -> new NotFoundException("User with id <" + currentUser.getUser().getId() + "> not found"));
 
         return ProfileDto.from(user);
     }
 
     @Override
-    public UserDto getUser(int userId) {
+    public UserResponseDto getUser(Long userId) {
         User user = usersRepository.findById(userId)
             .orElseThrow(() -> new NotFoundException("User with id <" + userId + "> not found"));
 
-        return UserDto.from(user);
+        return UserResponseDto.from(user);
     }
   
      public void banUser(int id) {

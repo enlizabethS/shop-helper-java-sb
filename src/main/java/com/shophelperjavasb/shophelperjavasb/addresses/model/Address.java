@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -17,9 +18,9 @@ import javax.validation.constraints.NotNull;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @NotNull
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private User user;
     @NotNull
     private String street;
@@ -31,4 +32,6 @@ public class Address {
     private int postalCode;
     @NotNull
     private String country;
+    @NotNull
+    private LocalDateTime createdDate;
 }
