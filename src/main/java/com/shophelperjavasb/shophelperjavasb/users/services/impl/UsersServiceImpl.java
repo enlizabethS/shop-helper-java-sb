@@ -62,15 +62,5 @@ public class UsersServiceImpl implements UsersService {
          usersRepository.save(user);
      }
 
-     @Autowired
-     private SessionFactory sessionFactory;
-
-     public void setSessionFactory(SessionFactory sessionFactory) {
-         this.sessionFactory = sessionFactory;
-     }
-     public void updateUser(User user) {
-         Session session = this.sessionFactory.getCurrentSession();
-         session.update(user);
-     }
 
 }

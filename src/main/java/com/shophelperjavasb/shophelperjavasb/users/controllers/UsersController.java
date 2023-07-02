@@ -50,10 +50,4 @@ public class UsersController implements UsersApi {
     }
 
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String update(@ModelAttribute("user") User user) {
-        usersServiceImpl.updateUser(user);
-        return "redirect:/some-success-url";
-    }
-
 }
