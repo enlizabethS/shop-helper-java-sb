@@ -20,8 +20,7 @@ public class Shipper {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
-    private String shipperName;
+    private String name;
     @NotNull
     private String phone;
     @NotNull
