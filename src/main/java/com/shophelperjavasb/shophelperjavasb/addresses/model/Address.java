@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -31,4 +32,6 @@ public class Address {
     private int postalCode;
     @NotNull
     private String country;
+    @NotNull
+    private LocalDateTime createdDate;
 }
