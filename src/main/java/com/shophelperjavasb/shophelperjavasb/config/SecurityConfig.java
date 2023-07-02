@@ -32,15 +32,16 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable();
         httpSecurity.headers().frameOptions().disable();
+        httpSecurity.cors();
 
         httpSecurity.authorizeRequests()
             .antMatchers("/swagger-ui/**").permitAll()
             .antMatchers("/v3/api-docs/**").permitAll()
-            .antMatchers("/api/auth/signup").permitAll()
-            .anyRequest().authenticated()
+            .antMatchers("/api/auth/sign-up").permitAll()
+//            .anyRequest().authenticated()
             .and()
             .formLogin()
-            .loginProcessingUrl("/api/auth/login")
+            .loginProcessingUrl("/api/auth/sign-in")
             .successHandler((request, response, authentication) -> {
                 fillResponse(response, 200, "Successful authentication");
             })
@@ -55,7 +56,7 @@ public class SecurityConfig {
             )
             .and()
             .logout()
-            .logoutUrl("/api/auth/logout")
+            .logoutUrl("/api/auth/sign-out")
             .logoutSuccessHandler((request, response, authentication) ->
                 fillResponse(response, 200, "Successful logout")
             )

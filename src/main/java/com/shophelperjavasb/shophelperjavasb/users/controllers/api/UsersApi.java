@@ -1,9 +1,8 @@
 package com.shophelperjavasb.shophelperjavasb.users.controllers.api;
 
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
-import com.shophelperjavasb.shophelperjavasb.users.dto.NewUserDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.ProfileDto;
-import com.shophelperjavasb.shophelperjavasb.users.dto.UserDto;
+import com.shophelperjavasb.shophelperjavasb.users.dto.UserResponseDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.UsersPage;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,5 +23,5 @@ public interface UsersApi {
     ResponseEntity<ProfileDto> getProfile(@Parameter(hidden = true) @AuthenticationPrincipal AuthenticatedUser currentUser);
 
     @GetMapping("/{user-id}")
-    ResponseEntity<UserDto> getUser(@PathVariable("user-id") Long userId);
+    ResponseEntity<UserResponseDto> getUser(@PathVariable("user-id") Long userId);
 }

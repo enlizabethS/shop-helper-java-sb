@@ -1,6 +1,8 @@
 package com.shophelperjavasb.shophelperjavasb.users.model;
 
 import com.shophelperjavasb.shophelperjavasb.addresses.model.Address;
+import com.shophelperjavasb.shophelperjavasb.auctions.model.Auction;
+import com.shophelperjavasb.shophelperjavasb.auctions.model.Bid;
 import com.shophelperjavasb.shophelperjavasb.products.model.Product;
 import com.shophelperjavasb.shophelperjavasb.purchases.model.Purchase;
 import lombok.AllArgsConstructor;
@@ -38,10 +40,14 @@ public class User {
     private LocalDateTime createdDate;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Address.class)
     private Address address;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Product.class)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> products = new ArrayList<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Purchase> purchases = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Auction> auctions = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Bid> bids = new ArrayList<>();
 
     @Enumerated(value = EnumType.STRING) // чтобы хранил в БД как строку, а не число
     private Role role;

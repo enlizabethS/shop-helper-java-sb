@@ -6,10 +6,12 @@ import com.shophelperjavasb.shophelperjavasb.users.dto.UserDto;
 import com.shophelperjavasb.shophelperjavasb.users.services.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:3000/")
 public class AuthController implements AuthApi {
     private final AuthService authService;
 
@@ -18,10 +20,4 @@ public class AuthController implements AuthApi {
         return ResponseEntity.status(201)
             .body(authService.signUp(newUserDto));
     }
-
-    @Override
-    public void login() {}
-
-    @Override
-    public void logout() {}
 }

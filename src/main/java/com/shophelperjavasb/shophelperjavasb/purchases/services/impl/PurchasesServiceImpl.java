@@ -6,7 +6,7 @@ import com.shophelperjavasb.shophelperjavasb.products.model.Product;
 import com.shophelperjavasb.shophelperjavasb.products.repositories.ProductsRepository;
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.NewPurchaseDto;
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseDto;
-import com.shophelperjavasb.shophelperjavasb.purchases.dto.StatusPurchaseDto;
+import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseResponseDto;
 import com.shophelperjavasb.shophelperjavasb.purchases.model.Purchase;
 import com.shophelperjavasb.shophelperjavasb.purchases.repositories.PurchasesRepository;
 import com.shophelperjavasb.shophelperjavasb.purchases.services.PurchasesService;
@@ -26,7 +26,7 @@ public class PurchasesServiceImpl implements PurchasesService {
     private final ShippersRepository shippersRepository;
 
     @Override
-    public PurchaseDto createPurchase(
+    public PurchaseResponseDto createPurchase(
         AuthenticatedUser currentUser,
         NewPurchaseDto newPurchaseDto
     ) {
@@ -49,15 +49,15 @@ public class PurchasesServiceImpl implements PurchasesService {
 
         purchasesRepository.save(newPurchase);
 
-        return PurchaseDto.from(newPurchase);
+        return PurchaseResponseDto.from(newPurchase);
     }
 
     @Override
-    public PurchaseDto getById(Long purchaseId) {
+    public PurchaseResponseDto getById(Long purchaseId) {
         Purchase purchase = purchasesRepository.findById(purchaseId)
             .orElseThrow(() -> new NotFoundException("Purchase with id <" + purchaseId + "> not found"));
 
-        return PurchaseDto.from(purchase);
+        return PurchaseResponseDto.from(purchase);
     }
 
     @Override
@@ -73,15 +73,15 @@ public class PurchasesServiceImpl implements PurchasesService {
     }
 
     @Override
-    public PurchaseDto updateStatus(Long purchaseId, StatusPurchaseDto newStatus) {
+    public PurchaseDto updateStatus(Long purchaseId, String newStatus) {
         Purchase originPurchase = purchasesRepository.findById(purchaseId)
             .orElseThrow(() -> new NotFoundException("Purchase with id <" + purchaseId + "> not found"));
 
-        if (newStatus.getStatus().name().equals("CREATED") ||
-            newStatus.getStatus().name().equals("PERFORMED") ||
-            newStatus.getStatus().name().equals("DONE")
+        if (newStatus.equals("CREATED") ||
+            newStatus.equals("PERFORMED") ||
+            newStatus.equals("DONE")
         ) {
-            originPurchase.setStatus(Purchase.Status.valueOf(newStatus.getStatus().name()));
+            originPurchase.setStatus(Purchase.Status.valueOf(newStatus));
 
             purchasesRepository.save(originPurchase);
 
