@@ -9,13 +9,7 @@ import com.shophelperjavasb.shophelperjavasb.users.repositories.UsersRepository;
 import com.shophelperjavasb.shophelperjavasb.users.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.security.Principal;
 import java.util.List;
 
  @Slf4j
@@ -55,24 +49,24 @@ public class UsersServiceImpl implements UsersService {
      }
 
      @Override
-     public void saveUser(User existingUser) {
-         usersRepository.saveUser(existingUser);
+     public void saveUser(User user) {
+         usersRepository.saveUser(user);
      }
 
 
-     public void banUser(Long id) {
-         User user = usersRepository.findById(id).orElse(null);
-         if (user != null) {
-             if (user.isActive()) {
-                 user.setActive(false);
-                 log.info("Ban user with id = {}; email: {}", user.getId(), user.getEmail());
-             } else {
-                 user.setActive(true);
-                 log.info("Unban user with id = {}; email: {}", user.getId(), user.getEmail());
-             }
-         }
-         usersRepository.save(user);
-     }
+//     public void banUser(Long id) {
+//         User user = usersRepository.findById(id).orElse(null);
+//         if (user != null) {
+//             if (user.isActive()) {
+//                 user.setActive(false);
+//                 log.info("Ban user with id = {}; email: {}", user.getId(), user.getEmail());
+//             } else {
+//                 user.setActive(true);
+//                 log.info("Unban user with id = {}; email: {}", user.getId(), user.getEmail());
+//             }
+//         }
+//         usersRepository.save(user);
+//     }
  }
 
 
