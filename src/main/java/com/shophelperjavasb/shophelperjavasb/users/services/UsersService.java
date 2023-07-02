@@ -8,7 +8,11 @@ import com.shophelperjavasb.shophelperjavasb.users.dto.UsersPage;
 public interface UsersService {
     UsersPage getAll();
 
-    ProfileDto getProfile(AuthenticatedUser currentUser);
+    ProfileDto getProfile(Long currentUserId);
 
-    UserResponseDto getUser(Long userId);
+    UserDto getUser(Long userId);
+
+    User getUserById(Long userId);
+
+    void saveUser(User existingUser);
 }
