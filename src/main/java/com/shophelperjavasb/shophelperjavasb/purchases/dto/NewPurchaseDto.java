@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class NewPurchaseDto {
     @Schema(description = "the product the user is buying")
-    private int productId;
+    private Long productId;
     @Schema(description = "number of products")
     private int quantity;
     @Schema(description = "id of the provider")
-    private int shipperId;
+    private Long shipperId;
 }

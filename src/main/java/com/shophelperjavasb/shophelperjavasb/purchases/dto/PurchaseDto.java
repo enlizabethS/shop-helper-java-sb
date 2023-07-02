@@ -1,6 +1,7 @@
 package com.shophelperjavasb.shophelperjavasb.purchases.dto;
 
 import com.shophelperjavasb.shophelperjavasb.purchases.model.Purchase;
+import com.shophelperjavasb.shophelperjavasb.users.model.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @Builder
 public class PurchaseDto {
     @Schema(description = "id of the purchase")
-    private int id;
+    private Long id;
     @Schema(description = "number of products")
     private int quantity;
     @Schema(description = "purchase creation date")

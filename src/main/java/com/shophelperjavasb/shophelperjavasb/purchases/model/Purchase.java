@@ -26,20 +26,20 @@ public class Purchase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
     @NotNull
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
     @NotNull
     private int quantity;
     @NotNull
     private LocalDateTime createdDate;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "shipper_id", referencedColumnName = "id")
     private Shipper shipper;
     @Enumerated(value = EnumType.STRING)

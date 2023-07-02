@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 public class UserDto {
-    private Long  id;
+    private Long id;
     private String username;
     private String email;
 

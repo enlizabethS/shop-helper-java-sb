@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,20 +20,21 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
     @NotNull
-    private String productName;
+    private String name;
     @NotNull
     private int quantity;
-    private int price;
+    private double price;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
             mappedBy = "product")
     private List<Image> images = new ArrayList<>();
     private Long previewImageId;
+    private LocalDateTime createdDate;
 
     public void addImageToProduct(Image image) {
         image.setProduct(this);

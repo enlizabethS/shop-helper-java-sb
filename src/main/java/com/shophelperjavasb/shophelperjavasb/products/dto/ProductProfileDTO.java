@@ -11,16 +11,16 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class ProductProfileDTO {
-    private int id;
-    private String productName;
+    private Long id;
+    private String name;
     private int quantity;
-    private int price;
+    private double price;
     private Long previewImageId;
 
     public static ProductProfileDTO from(Product product) {
         return ProductProfileDTO.builder()
                 .id(product.getId())
-                .productName(product.getProductName())
+                .name(product.getName())
                 .quantity(product.getQuantity())
                 .price(product.getPrice())
                 .previewImageId(product.getPreviewImageId())

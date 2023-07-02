@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 public class ProductDTO {
-    private int id;
-    private String productName;
-    private int price;
+    private Long id;
+    private String name;
+    private double price;
 
     public static ProductDTO from(Product product){
         return ProductDTO.builder()
                 .id(product.getId())
-                .productName(product.getProductName())
+                .name(product.getName())
                 .price(product.getPrice())
                 .build();
     }
