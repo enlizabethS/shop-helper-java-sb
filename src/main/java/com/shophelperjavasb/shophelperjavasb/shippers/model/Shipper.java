@@ -18,7 +18,7 @@ import java.util.List;
 public class Shipper {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @NotNull
     private String shipperName;
     @NotNull
@@ -26,4 +26,12 @@ public class Shipper {
     @NotNull
     @OneToMany(mappedBy = "shipper")
     private List<Purchase> purchases;
+    private boolean selfPickUp;
+    public boolean isSelfPickUp() {
+        return selfPickUp;
+    }
+
+    public void setSelfPickUp(boolean selfPickUp) {
+        this.selfPickUp = selfPickUp;
+    }
 }
