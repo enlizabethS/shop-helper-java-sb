@@ -3,7 +3,7 @@ package com.shophelperjavasb.shophelperjavasb.purchases.controllers.api;
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.NewPurchaseDto;
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseDto;
-import com.shophelperjavasb.shophelperjavasb.purchases.dto.StatusPurchaseDto;
+import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -29,7 +29,7 @@ public interface PurchasesApi {
                     schema = @Schema(implementation = PurchaseDto.class))})}
     )
     @PostMapping
-    ResponseEntity<PurchaseDto> createPurchase(
+    ResponseEntity<PurchaseResponseDto> createPurchase(
         @Parameter(hidden = true) @AuthenticationPrincipal AuthenticatedUser currentUser,
         @RequestBody NewPurchaseDto newPurchaseDto);
 
@@ -41,7 +41,7 @@ public interface PurchasesApi {
                     schema = @Schema(implementation = PurchaseDto.class))})}
     )
     @GetMapping("/{purchase-id}")
-    ResponseEntity<PurchaseDto> getById(@PathVariable("purchase-id") int purchaseId);
+    ResponseEntity<PurchaseResponseDto> getById(@PathVariable("purchase-id") Long purchaseId);
 
     @Operation(summary = "Update by id", description = "Update the entire purchase item by id")
     @ApiResponses(value = {
@@ -51,7 +51,7 @@ public interface PurchasesApi {
                     schema = @Schema(implementation = PurchaseDto.class))})}
     )
     @PutMapping("/{purchase-id}")
-    ResponseEntity<PurchaseDto> updateById(@PathVariable("purchase-id") int purchaseId, @RequestBody NewPurchaseDto newPurchaseDto);
+    ResponseEntity<PurchaseDto> updateById(@PathVariable("purchase-id") Long purchaseId, @RequestBody NewPurchaseDto newPurchaseDto);
 
     @Operation(summary = "Update status", description = "Update purchase status by id")
     @ApiResponses(value = {
@@ -60,6 +60,6 @@ public interface PurchasesApi {
                 @Content(mediaType = "application/json",
                     schema = @Schema(implementation = PurchaseDto.class))})}
     )
-    @PatchMapping("/{purchase-id}")
-    ResponseEntity<PurchaseDto> updateStatus(@PathVariable("purchase-id") int purchaseId, @RequestBody StatusPurchaseDto newStatus);
+    @PutMapping("/status/{purchase-id}")
+    ResponseEntity<PurchaseDto> updateStatus(@PathVariable("purchase-id") Long purchaseId, @RequestBody String newStatus);
 }

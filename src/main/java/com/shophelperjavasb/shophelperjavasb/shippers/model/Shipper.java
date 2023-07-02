@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,12 +19,11 @@ import java.util.List;
 public class Shipper {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @NotNull
-    private String shipperName;
+    private Long id;
+    private String name;
     @NotNull
     private String phone;
     @NotNull
-    @OneToMany(mappedBy = "shipper")
-    private List<Purchase> purchases;
+    @OneToMany(mappedBy = "shipper", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Purchase> purchases = new ArrayList<>();
 }

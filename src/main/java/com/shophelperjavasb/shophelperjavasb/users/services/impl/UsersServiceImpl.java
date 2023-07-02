@@ -1,8 +1,10 @@
 package com.shophelperjavasb.shophelperjavasb.users.services.impl;
 
+import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
 import com.shophelperjavasb.shophelperjavasb.exceptions.NotFoundException;
 import com.shophelperjavasb.shophelperjavasb.users.dto.ProfileDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.UserDto;
+import com.shophelperjavasb.shophelperjavasb.users.dto.UserResponseDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.UsersPage;
 import com.shophelperjavasb.shophelperjavasb.users.model.User;
 import com.shophelperjavasb.shophelperjavasb.users.repositories.UsersRepository;
@@ -59,7 +61,6 @@ public class UsersServiceImpl implements UsersService {
          usersRepository.saveUser(existingUser);
      }
 
-
      public void banUser(Long id) {
          User user = usersRepository.findById(id).orElse(null);
          if (user != null) {
@@ -74,5 +75,3 @@ public class UsersServiceImpl implements UsersService {
          usersRepository.save(user);
      }
  }
-
-

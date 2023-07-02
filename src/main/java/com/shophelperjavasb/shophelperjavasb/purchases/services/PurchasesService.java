@@ -3,20 +3,20 @@ package com.shophelperjavasb.shophelperjavasb.purchases.services;
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.NewPurchaseDto;
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseDto;
-import com.shophelperjavasb.shophelperjavasb.purchases.dto.StatusPurchaseDto;
+import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseResponseDto;
 
 public interface PurchasesService {
-    PurchaseDto createPurchase(
+    PurchaseResponseDto createPurchase(
         AuthenticatedUser currentUser,
         NewPurchaseDto newPurchaseDto);
 
-    PurchaseDto getById(int purchaseId);
+    PurchaseResponseDto getById(Long purchaseId);
 
     PurchaseDto updateById(
-        int purchaseId,
+        Long purchaseId,
         NewPurchaseDto newPurchaseDto);
 
     PurchaseDto updateStatus(
-        int purchaseId,
-        StatusPurchaseDto newStatus);
+        Long purchaseId,
+        String newStatus);
 }

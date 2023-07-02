@@ -18,8 +18,8 @@ import java.util.Collections;
 public class OpenApiDocumentation {
     static Paths buildAuthenticationPath() {
         return new Paths()
-            .addPathItem("/api/auth/login", buildAuthenticationPathItem())
-            .addPathItem("/api/auth/logout", buildLogoutPathItem());
+            .addPathItem("/api/auth/sign-in", buildAuthenticationPathItem())
+            .addPathItem("/api/auth/sign-out", buildLogoutPathItem());
     }
 
     private static PathItem buildLogoutPathItem() {

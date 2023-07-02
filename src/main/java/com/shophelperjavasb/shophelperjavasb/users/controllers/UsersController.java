@@ -1,14 +1,12 @@
 package com.shophelperjavasb.shophelperjavasb.users.controllers;
 
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
-import com.shophelperjavasb.shophelperjavasb.users.controllers.api.UsersApi;
-import com.shophelperjavasb.shophelperjavasb.users.dto.NewUserDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.ProfileDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.UserDto;
+import com.shophelperjavasb.shophelperjavasb.users.dto.UserResponseDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.UsersPage;
-import com.shophelperjavasb.shophelperjavasb.users.model.User;
+import com.shophelperjavasb.shophelperjavasb.users.controllers.api.UsersApi;
 import com.shophelperjavasb.shophelperjavasb.users.services.UsersService;
-import com.shophelperjavasb.shophelperjavasb.users.services.impl.UsersServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,8 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,6 +30,7 @@ public class UsersController implements UsersApi {
     @PreAuthorize("isAuthenticated()")
     @Override
     public ResponseEntity<ProfileDto> getProfile(AuthenticatedUser currentUser) {
+
         Long  currentUserId = currentUser.getUser().getId();
         ProfileDto profile = usersService.getProfile(currentUserId);
 
