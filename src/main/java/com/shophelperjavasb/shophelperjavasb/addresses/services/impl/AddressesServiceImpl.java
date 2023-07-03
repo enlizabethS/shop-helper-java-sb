@@ -5,29 +5,29 @@ import com.shophelperjavasb.shophelperjavasb.addresses.dto.NewAddressDto;
 import com.shophelperjavasb.shophelperjavasb.addresses.model.Address;
 import com.shophelperjavasb.shophelperjavasb.addresses.repositories.AddressRepository;
 import com.shophelperjavasb.shophelperjavasb.addresses.services.AddressesService;
-import com.shophelperjavasb.shophelperjavasb.auctions.dto.AuctionDto;
-import com.shophelperjavasb.shophelperjavasb.auctions.model.Auction;
-import com.shophelperjavasb.shophelperjavasb.auctions.model.Bid;
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
 import com.shophelperjavasb.shophelperjavasb.exceptions.NotFoundException;
 import com.shophelperjavasb.shophelperjavasb.users.model.User;
+import com.shophelperjavasb.shophelperjavasb.users.repositories.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class AddressesServiceImpl implements AddressesService {
     private final AddressRepository addressRepository;
+    private final UsersRepository usersRepository;
 
     @Override
     public AddressDto createNew(AuthenticatedUser currentUser, NewAddressDto newAddressDto) {
-        User user = currentUser.getUser();
+        User currUser = currentUser.getUser();
+
+        User user = usersRepository.findById(currUser.getId()).get();
 
         Address address = Address.builder()
-            .user(user)
+            .user(currUser)
             .street(newAddressDto.getStreet())
             .houseNumber(newAddressDto.getHouseNumber())
             .city(newAddressDto.getCity())
@@ -37,6 +37,10 @@ public class AddressesServiceImpl implements AddressesService {
             .build();
 
         addressRepository.save(address);
+
+        user.setAddress(address);
+
+        usersRepository.save(user);
 
         return AddressDto.from(address);
     }
