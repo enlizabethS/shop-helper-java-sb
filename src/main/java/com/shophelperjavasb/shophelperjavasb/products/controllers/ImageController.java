@@ -1,5 +1,6 @@
 package com.shophelperjavasb.shophelperjavasb.products.controllers;
 
+import com.shophelperjavasb.shophelperjavasb.products.controllers.api.ImageApi;
 import com.shophelperjavasb.shophelperjavasb.products.model.Image;
 import com.shophelperjavasb.shophelperjavasb.products.repositories.ImageRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,12 +15,16 @@ import java.io.ByteArrayInputStream;
 
 @RestController
 @RequiredArgsConstructor
-public class ImageController {
+public class ImageController implements ImageApi {
     private final ImageRepository imageRepository;
 
-    @GetMapping("/images/{id}")
-    private ResponseEntity<?> getImageById(@PathVariable Long id) {
+    @Override
+    public ResponseEntity<InputStreamResource> getImageById(@PathVariable Long id) {
         Image image = imageRepository.findById(id).orElse(null);
+        if (image == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok()
                 .header("fileName", image.getOriginalFileName())
                 .contentType(MediaType.valueOf(image.getContentType()))
