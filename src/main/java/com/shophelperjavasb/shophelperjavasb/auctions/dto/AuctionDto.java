@@ -43,9 +43,9 @@ public class AuctionDto {
             .build();
     }
 
-    public static List<PurchaseResponseDto> from(List<Purchase> purchases) {
-        return purchases.stream()
-            .map(PurchaseResponseDto::from)
+    public static List<AuctionDto> from(List<Auction> auctions) {
+        return auctions.stream()
+            .map(AuctionDto::from)
             .collect(Collectors.toList());
     }
 }

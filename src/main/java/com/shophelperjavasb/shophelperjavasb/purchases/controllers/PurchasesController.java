@@ -6,6 +6,7 @@ import com.shophelperjavasb.shophelperjavasb.purchases.dto.NewPurchaseDto;
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseDto;
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseResponseDto;
 import com.shophelperjavasb.shophelperjavasb.purchases.services.PurchasesService;
+import com.shophelperjavasb.shophelperjavasb.shared.dto.PutStatusDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,7 +45,7 @@ public class PurchasesController implements PurchasesApi {
 
     @PreAuthorize("isAuthenticated()")
     @Override
-    public ResponseEntity<PurchaseDto> updateStatus(Long purchaseId, String newStatus) {
+    public ResponseEntity<PurchaseDto> updateStatus(Long purchaseId, PutStatusDto newStatus) {
         return ResponseEntity.status(200)
             .body(purchasesService.updateStatus(purchaseId, newStatus));
     }

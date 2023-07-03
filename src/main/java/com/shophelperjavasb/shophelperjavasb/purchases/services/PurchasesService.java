@@ -4,6 +4,7 @@ import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.NewPurchaseDto;
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseDto;
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseResponseDto;
+import com.shophelperjavasb.shophelperjavasb.shared.dto.PutStatusDto;
 
 public interface PurchasesService {
     PurchaseResponseDto createPurchase(
@@ -18,5 +19,5 @@ public interface PurchasesService {
 
     PurchaseDto updateStatus(
         Long purchaseId,
-        String newStatus);
+        PutStatusDto newStatus);
 }

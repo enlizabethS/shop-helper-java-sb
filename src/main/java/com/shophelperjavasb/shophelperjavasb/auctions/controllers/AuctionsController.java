@@ -6,6 +6,7 @@ import com.shophelperjavasb.shophelperjavasb.auctions.dto.BidDto;
 import com.shophelperjavasb.shophelperjavasb.auctions.dto.NewAuctionDto;
 import com.shophelperjavasb.shophelperjavasb.auctions.services.AuctionsService;
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
+import com.shophelperjavasb.shophelperjavasb.shared.dto.PutStatusDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,7 +34,7 @@ public class AuctionsController implements AuctionsApi {
 
     @PreAuthorize("isAuthenticated()")
     @Override
-    public ResponseEntity<AuctionDto> updateStatus(Long auctionId, String newStatus) {
+    public ResponseEntity<AuctionDto> updateStatus(Long auctionId, PutStatusDto newStatus) {
         return ResponseEntity.ok(auctionsService.updateStatus(auctionId, newStatus));
     }
 
