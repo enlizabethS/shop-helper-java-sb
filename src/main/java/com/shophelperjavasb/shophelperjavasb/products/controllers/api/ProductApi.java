@@ -48,7 +48,7 @@ public interface ProductApi {
             Principal principal
     ) throws IOException;
 
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @Operation(summary = "Delete a product")
     @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json"))
     String deleteProduct(
