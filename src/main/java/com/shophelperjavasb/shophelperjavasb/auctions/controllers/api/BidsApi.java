@@ -50,6 +50,6 @@ public interface BidsApi {
                 @Content(mediaType = "application/json",
                     schema = @Schema(implementation = BidDto.class))})}
     )
-    @PutMapping("/status/{bid-id}")
+    @PutMapping("/{bid-id}/status")
     ResponseEntity<BidDto> updateStatus(@PathVariable("bid-id") Long purchaseId, @RequestBody String newStatus);
 }

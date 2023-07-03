@@ -16,18 +16,21 @@ import java.util.stream.Collectors;
 public class ProductDTO {
     private Long id;
     private String name;
+    private int quantity;
     private double price;
 
-    public static ProductDTO from(Product product){
+    public static ProductDTO from(Product product) {
         return ProductDTO.builder()
-                .id(product.getId())
-                .name(product.getName())
-                .price(product.getPrice())
-                .build();
+            .id(product.getId())
+            .name(product.getName())
+            .quantity(product.getQuantity())
+            .price(product.getPrice())
+            .build();
     }
-    public static List<ProductDTO> from(List<Product> products){
+
+    public static List<ProductDTO> from(List<Product> products) {
         return products.stream()
-                .map(ProductDTO::from)
-                .collect(Collectors.toList());
+            .map(ProductDTO::from)
+            .collect(Collectors.toList());
     }
 }

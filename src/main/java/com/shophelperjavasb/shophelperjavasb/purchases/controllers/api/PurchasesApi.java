@@ -60,6 +60,6 @@ public interface PurchasesApi {
                 @Content(mediaType = "application/json",
                     schema = @Schema(implementation = PurchaseDto.class))})}
     )
-    @PutMapping("/status/{purchase-id}")
+    @PutMapping("/{purchase-id}/status")
     ResponseEntity<PurchaseDto> updateStatus(@PathVariable("purchase-id") Long purchaseId, @RequestBody String newStatus);
 }

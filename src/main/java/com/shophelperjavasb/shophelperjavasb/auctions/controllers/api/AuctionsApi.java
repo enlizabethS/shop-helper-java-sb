@@ -52,7 +52,7 @@ public interface AuctionsApi {
                 @Content(mediaType = "application/json",
                     schema = @Schema(implementation = AuctionDto.class))})}
     )
-    @PutMapping("/status/{auction-id}")
+    @PutMapping("/{auction-id}/status")
     ResponseEntity<AuctionDto> updateStatus(@PathVariable("auction-id") Long auctionId, @RequestBody String newStatus);
 
     @Operation(summary = "Update bids", description = "Update auction bids by id")
@@ -70,8 +70,8 @@ public interface AuctionsApi {
         @ApiResponse(responseCode = "200", description = "Get all bids by auction id",
             content = {
                 @Content(mediaType = "application/json",
-                    schema = @Schema(ref = "StandardResponseDto"))})}
+                    schema = @Schema(implementation = BidDto.class))})}
     )
-    @PutMapping("/{auction-id}/bids")
+    @GetMapping("/{auction-id}/bids")
     ResponseEntity<List<BidDto>> getBidsByAuction(@PathVariable("auction-id") Long auctionId);
 }

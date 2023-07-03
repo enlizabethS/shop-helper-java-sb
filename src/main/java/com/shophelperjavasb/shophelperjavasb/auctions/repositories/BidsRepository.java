@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface BidsRepository extends JpaRepository<Bid, Long> {
     List<Bid> findAllByAuction_Id(Long auctionId);
+
+    List<Bid> findAllByUser_Id(Long userId);
 }
