@@ -60,7 +60,7 @@ public interface UsersApi {
         )
     })
     @PutMapping("/{userId}")
-    ResponseEntity<String> updateUser(@PathVariable Long userId, @RequestBody User updatedUser);
+    ResponseEntity<UserResponseDto> updateUser(@Parameter(hidden = true) @AuthenticationPrincipal AuthenticatedUser currentUser, @RequestBody UserUpdateDto updatedUser);
 
     // не менять - получать профиль
     @Operation(summary = "Profile")

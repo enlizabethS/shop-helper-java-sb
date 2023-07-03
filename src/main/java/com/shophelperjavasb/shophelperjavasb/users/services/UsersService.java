@@ -5,9 +5,7 @@ import com.shophelperjavasb.shophelperjavasb.auctions.dto.BidDto;
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
 import com.shophelperjavasb.shophelperjavasb.products.dto.ProductDTO;
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseResponseDto;
-import com.shophelperjavasb.shophelperjavasb.users.dto.ProfileDto;
-import com.shophelperjavasb.shophelperjavasb.users.dto.UserDto;
-import com.shophelperjavasb.shophelperjavasb.users.dto.UsersPage;
+import com.shophelperjavasb.shophelperjavasb.users.dto.*;
 import com.shophelperjavasb.shophelperjavasb.users.model.User;
 
 import java.util.List;
@@ -21,6 +19,8 @@ public interface UsersService {
     UserDto getUser(Long userId);
 
     User getUserById(Long userId);
+
+    UserResponseDto updateUser(AuthenticatedUser currentUser, UserUpdateDto updatedUser);
 
     // не менять - получать продукты текущего пользователя
     List<ProductDTO> getMyProducts(AuthenticatedUser currentUser);

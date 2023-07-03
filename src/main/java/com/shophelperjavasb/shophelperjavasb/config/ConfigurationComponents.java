@@ -31,7 +31,7 @@ public class ConfigurationComponents {
                 registry.addMapping("/**")
                     .allowedOrigins("http://localhost:3000")
                     .allowCredentials(true)
-//                    .allowedMethods("HEAD","GET","POST","PUT","DELETE","PATCH")
+                    .allowedMethods("HEAD","GET","POST","PUT","DELETE","PATCH")
 //                    .allowedHeaders("*")
                 ;
             }
