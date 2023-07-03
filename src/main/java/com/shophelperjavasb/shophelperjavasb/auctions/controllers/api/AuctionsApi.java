@@ -4,6 +4,7 @@ import com.shophelperjavasb.shophelperjavasb.auctions.dto.AuctionDto;
 import com.shophelperjavasb.shophelperjavasb.auctions.dto.BidDto;
 import com.shophelperjavasb.shophelperjavasb.auctions.dto.NewAuctionDto;
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
+import com.shophelperjavasb.shophelperjavasb.shared.dto.PutStatusDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -52,8 +53,8 @@ public interface AuctionsApi {
                 @Content(mediaType = "application/json",
                     schema = @Schema(implementation = AuctionDto.class))})}
     )
-    @PutMapping("/status/{auction-id}")
-    ResponseEntity<AuctionDto> updateStatus(@PathVariable("auction-id") Long auctionId, @RequestBody String newStatus);
+    @PutMapping("/{auction-id}/status")
+    ResponseEntity<AuctionDto> updateStatus(@PathVariable("auction-id") Long auctionId, @RequestBody PutStatusDto newStatus);
 
     @Operation(summary = "Update bids", description = "Update auction bids by id")
     @ApiResponses(value = {
@@ -70,8 +71,8 @@ public interface AuctionsApi {
         @ApiResponse(responseCode = "200", description = "Get all bids by auction id",
             content = {
                 @Content(mediaType = "application/json",
-                    schema = @Schema(ref = "StandardResponseDto"))})}
+                    schema = @Schema(implementation = BidDto.class))})}
     )
-    @PutMapping("/{auction-id}/bids")
+    @GetMapping("/{auction-id}/bids")
     ResponseEntity<List<BidDto>> getBidsByAuction(@PathVariable("auction-id") Long auctionId);
 }

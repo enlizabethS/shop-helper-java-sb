@@ -1,6 +1,10 @@
 package com.shophelperjavasb.shophelperjavasb.users.controllers;
 
+import com.shophelperjavasb.shophelperjavasb.auctions.dto.AuctionDto;
+import com.shophelperjavasb.shophelperjavasb.auctions.dto.BidDto;
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
+import com.shophelperjavasb.shophelperjavasb.products.dto.ProductDTO;
+import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseResponseDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.ProfileDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.UserDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.UsersPage;
@@ -14,6 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class UsersController implements UsersApi {
@@ -26,20 +32,12 @@ public class UsersController implements UsersApi {
         return ResponseEntity.ok(usersService.getAll());
     }
 
-    @PreAuthorize("isAuthenticated()")
-    @Override
-    public ResponseEntity<ProfileDto> getProfile(AuthenticatedUser currentUser) {
-
-        Long  currentUserId = currentUser.getUser().getId();
-        ProfileDto profile = usersService.getProfile(currentUserId);
-
-        return ResponseEntity.ok(profile);
-    }
     @Override
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<UserDto> getUser( Long userId) {
         return ResponseEntity.ok(usersService.getUser(userId));
     }
+
     @Override
     public ResponseEntity<String> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
         User user = usersService.getUserById(userId);
@@ -53,6 +51,41 @@ public class UsersController implements UsersApi {
         usersRepository.save(user);
 
         return new ResponseEntity<>("User update", HttpStatus.OK);
+    }
+
+    // не менять - получать профиль
+    @PreAuthorize("isAuthenticated()")
+    @Override
+    public ResponseEntity<ProfileDto> getProfile(AuthenticatedUser currentUser) {
+
+        Long  currentUserId = currentUser.getUser().getId();
+        ProfileDto profile = usersService.getProfile(currentUserId);
+
+        return ResponseEntity.ok(profile);
+    }
+
+    // не менять - получать продукты текущего пользователя
+    @Override
+    public ResponseEntity<List<ProductDTO>> getMyProducts(AuthenticatedUser currentUser) {
+        return ResponseEntity.ok(usersService.getMyProducts(currentUser));
+    }
+
+    // не менять - получать покупки текущего пользователя
+    @Override
+    public ResponseEntity<List<PurchaseResponseDto>> getMyPurchases(AuthenticatedUser currentUser) {
+        return ResponseEntity.ok(usersService.getMyPurchases(currentUser));
+    }
+
+    // не менять - получать аукционы текущего пользователя
+    @Override
+    public ResponseEntity<List<AuctionDto>> getMyAuctions(AuthenticatedUser currentUser) {
+        return ResponseEntity.ok(usersService.getMyAuctions(currentUser));
+    }
+
+    // не менять - получать ставки текущего пользователя
+    @Override
+    public ResponseEntity<List<BidDto>> getMyBids(AuthenticatedUser currentUser) {
+        return ResponseEntity.ok(usersService.getMyBids(currentUser));
     }
 }
 

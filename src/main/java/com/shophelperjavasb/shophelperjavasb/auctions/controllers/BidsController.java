@@ -5,6 +5,7 @@ import com.shophelperjavasb.shophelperjavasb.auctions.dto.BidDto;
 import com.shophelperjavasb.shophelperjavasb.auctions.dto.NewBidDto;
 import com.shophelperjavasb.shophelperjavasb.auctions.services.BidsService;
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
+import com.shophelperjavasb.shophelperjavasb.shared.dto.PutStatusDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,7 +31,7 @@ public class BidsController implements BidsApi {
 
     @PreAuthorize("isAuthenticated()")
     @Override
-    public ResponseEntity<BidDto> updateStatus(Long bidId, String newStatus) {
+    public ResponseEntity<BidDto> updateStatus(Long bidId, PutStatusDto newStatus) {
         return ResponseEntity.ok(bidsService.updateStatus(bidId, newStatus));
     }
 }

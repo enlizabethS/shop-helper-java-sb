@@ -4,6 +4,7 @@ import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.NewPurchaseDto;
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseDto;
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseResponseDto;
+import com.shophelperjavasb.shophelperjavasb.shared.dto.PutStatusDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -60,6 +61,6 @@ public interface PurchasesApi {
                 @Content(mediaType = "application/json",
                     schema = @Schema(implementation = PurchaseDto.class))})}
     )
-    @PutMapping("/status/{purchase-id}")
-    ResponseEntity<PurchaseDto> updateStatus(@PathVariable("purchase-id") Long purchaseId, @RequestBody String newStatus);
+    @PutMapping("/{purchase-id}/status")
+    ResponseEntity<PurchaseDto> updateStatus(@PathVariable("purchase-id") Long purchaseId, @RequestBody PutStatusDto newStatus);
 }

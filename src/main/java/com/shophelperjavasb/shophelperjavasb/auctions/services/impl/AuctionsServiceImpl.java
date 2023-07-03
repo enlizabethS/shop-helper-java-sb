@@ -12,6 +12,7 @@ import com.shophelperjavasb.shophelperjavasb.exceptions.NotFoundException;
 import com.shophelperjavasb.shophelperjavasb.products.model.Product;
 import com.shophelperjavasb.shophelperjavasb.products.repositories.ProductsRepository;
 import com.shophelperjavasb.shophelperjavasb.auctions.repositories.AuctionsRepository;
+import com.shophelperjavasb.shophelperjavasb.shared.dto.PutStatusDto;
 import com.shophelperjavasb.shophelperjavasb.users.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -58,7 +59,7 @@ public class AuctionsServiceImpl implements AuctionsService {
     }
 
     @Override
-    public AuctionDto updateStatus(Long auctionId, String newStatus) {
+    public AuctionDto updateStatus(Long auctionId, PutStatusDto newStatus) {
         Auction auction = auctionsRepository.findById(auctionId)
             .orElseThrow(() -> new NotFoundException("Auction with id <" + auctionId + "> not found"));
 
@@ -66,7 +67,7 @@ public class AuctionsServiceImpl implements AuctionsService {
             newStatus.equals("PERFORMED") ||
             newStatus.equals("DONE")
         ) {
-            auction.setStatus(Auction.Status.valueOf(newStatus));
+            auction.setStatus(Auction.Status.valueOf(newStatus.getStatus()));
 
             auctionsRepository.save(auction);
 

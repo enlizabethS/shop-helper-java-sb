@@ -10,6 +10,7 @@ import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseResponseDto;
 import com.shophelperjavasb.shophelperjavasb.purchases.model.Purchase;
 import com.shophelperjavasb.shophelperjavasb.purchases.repositories.PurchasesRepository;
 import com.shophelperjavasb.shophelperjavasb.purchases.services.PurchasesService;
+import com.shophelperjavasb.shophelperjavasb.shared.dto.PutStatusDto;
 import com.shophelperjavasb.shophelperjavasb.shippers.model.Shipper;
 import com.shophelperjavasb.shophelperjavasb.shippers.repositories.ShippersRepository;
 import com.shophelperjavasb.shophelperjavasb.users.model.User;
@@ -73,7 +74,7 @@ public class PurchasesServiceImpl implements PurchasesService {
     }
 
     @Override
-    public PurchaseDto updateStatus(Long purchaseId, String newStatus) {
+    public PurchaseDto updateStatus(Long purchaseId, PutStatusDto newStatus) {
         Purchase originPurchase = purchasesRepository.findById(purchaseId)
             .orElseThrow(() -> new NotFoundException("Purchase with id <" + purchaseId + "> not found"));
 
@@ -81,7 +82,7 @@ public class PurchasesServiceImpl implements PurchasesService {
             newStatus.equals("PERFORMED") ||
             newStatus.equals("DONE")
         ) {
-            originPurchase.setStatus(Purchase.Status.valueOf(newStatus));
+            originPurchase.setStatus(Purchase.Status.valueOf(newStatus.getStatus()));
 
             purchasesRepository.save(originPurchase);
 

@@ -9,6 +9,7 @@ import com.shophelperjavasb.shophelperjavasb.auctions.services.BidsService;
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
 import com.shophelperjavasb.shophelperjavasb.exceptions.NotFoundException;
 import com.shophelperjavasb.shophelperjavasb.auctions.repositories.AuctionsRepository;
+import com.shophelperjavasb.shophelperjavasb.shared.dto.PutStatusDto;
 import com.shophelperjavasb.shophelperjavasb.users.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -50,15 +51,17 @@ public class BidsServiceImpl implements BidsService {
     }
 
     @Override
-    public BidDto updateStatus(Long bidId, String newStatus) {
+    public BidDto updateStatus(Long bidId, PutStatusDto newStatus) {
         Bid bid = bidsRepository.findById(bidId)
             .orElseThrow(() -> new NotFoundException("Purchase with id <" + bidId + "> not found"));
 
-        if (newStatus.equals("ACTIVE") ||
-        newStatus.equals("INACTIVE")) {
-            bid.setStatus(Bid.Status.valueOf(newStatus));
+        if (newStatus.getStatus().equals("ACTIVE") ||
+        newStatus.getStatus().equals("INACTIVE")) {
+            bid.setStatus(Bid.Status.valueOf(newStatus.getStatus()));
         }
 
-        return null;
+        bidsRepository.save(bid);
+
+        return BidDto.from(bid);
     }
 }
