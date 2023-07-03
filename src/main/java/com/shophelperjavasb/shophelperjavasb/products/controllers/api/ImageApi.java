@@ -1,7 +1,9 @@
 package com.shophelperjavasb.shophelperjavasb.products.controllers.api;
 
+import com.shophelperjavasb.shophelperjavasb.products.dto.ImageDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
@@ -18,6 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface ImageApi {
     @GetMapping("/{id}")
     @Operation(summary = "Get images")
-    @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json"))
+    @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ImageDTO.class)))
     ResponseEntity<InputStreamResource> getImageById(@PathVariable Long id);
 }
