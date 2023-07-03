@@ -4,6 +4,7 @@ import com.shophelperjavasb.shophelperjavasb.auctions.dto.AuctionDto;
 import com.shophelperjavasb.shophelperjavasb.auctions.dto.BidDto;
 import com.shophelperjavasb.shophelperjavasb.auctions.dto.NewAuctionDto;
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
+import com.shophelperjavasb.shophelperjavasb.shared.dto.PutStatusDto;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface AuctionsService {
 
     AuctionDto updateStatus(
         Long auctionId,
-        String newStatus);
+        PutStatusDto newStatus);
 
     AuctionDto updateBids(
         Long auctionId,

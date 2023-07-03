@@ -3,6 +3,7 @@ package com.shophelperjavasb.shophelperjavasb.auctions.controllers.api;
 import com.shophelperjavasb.shophelperjavasb.auctions.dto.BidDto;
 import com.shophelperjavasb.shophelperjavasb.auctions.dto.NewBidDto;
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
+import com.shophelperjavasb.shophelperjavasb.shared.dto.PutStatusDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -51,5 +52,5 @@ public interface BidsApi {
                     schema = @Schema(implementation = BidDto.class))})}
     )
     @PutMapping("/{bid-id}/status")
-    ResponseEntity<BidDto> updateStatus(@PathVariable("bid-id") Long purchaseId, @RequestBody String newStatus);
+    ResponseEntity<BidDto> updateStatus(@PathVariable("bid-id") Long bidId, @RequestBody PutStatusDto newStatus);
 }

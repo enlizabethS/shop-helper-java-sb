@@ -4,6 +4,7 @@ import com.shophelperjavasb.shophelperjavasb.auctions.dto.AuctionDto;
 import com.shophelperjavasb.shophelperjavasb.auctions.dto.BidDto;
 import com.shophelperjavasb.shophelperjavasb.auctions.dto.NewAuctionDto;
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
+import com.shophelperjavasb.shophelperjavasb.shared.dto.PutStatusDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -53,7 +54,7 @@ public interface AuctionsApi {
                     schema = @Schema(implementation = AuctionDto.class))})}
     )
     @PutMapping("/{auction-id}/status")
-    ResponseEntity<AuctionDto> updateStatus(@PathVariable("auction-id") Long auctionId, @RequestBody String newStatus);
+    ResponseEntity<AuctionDto> updateStatus(@PathVariable("auction-id") Long auctionId, @RequestBody PutStatusDto newStatus);
 
     @Operation(summary = "Update bids", description = "Update auction bids by id")
     @ApiResponses(value = {
