@@ -20,7 +20,7 @@ public class ShippersService {
 
     public ShippersDTO getShipperById(Long id) {
         Shipper shipper = shippersRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Shipper с ID " + id + " не найден"));
+                .orElseThrow(() -> new NoSuchElementException("Shipper с ID " + id + " not found"));
 
         return mapShipperToDTO(shipper);
     }
@@ -37,7 +37,7 @@ public class ShippersService {
     }
     public ShippersDTO updateShipper(Long id, ShippersDTO shipperDTO) {
         Shipper shipper = shippersRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Shipper с ID " + id + " не найден"));
+                .orElseThrow(() -> new NoSuchElementException("Shipper с ID " + id + " not found"));
 
         shipper.setShipperName(shipperDTO.getShipperName());
         shipper.setPhone(shipperDTO.getPhone());

@@ -1,9 +1,11 @@
 package com.shophelperjavasb.shophelperjavasb.products.controllers.api;
 
+import com.shophelperjavasb.shophelperjavasb.products.dto.ProductDTO;
 import com.shophelperjavasb.shophelperjavasb.products.model.Product;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
@@ -22,7 +24,7 @@ public interface ProductApi {
 
     @GetMapping("/")
     @Operation(summary = "Get products")
-    @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json"))
+    @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductDTO.class)))
     String products(
             @RequestParam(name = "searchWord", required = false) String title,
             Principal principal,
@@ -31,7 +33,7 @@ public interface ProductApi {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get product info")
-    @ApiResponse(responseCode = "200", content =@Content(mediaType = "application/json"))
+    @ApiResponse(responseCode = "200", content =@Content(mediaType = "application/json", schema = @Schema(implementation = ProductDTO.class)))
     String productInfo(
             @Parameter(description = "Product ID") @PathVariable Long id,
             Model model,
@@ -39,7 +41,7 @@ public interface ProductApi {
     );
     @PostMapping("/create")
     @Operation(summary = "Create a new product")
-    @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json"))
+    @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductDTO.class)))
     String createProduct(
             @Parameter(description = "File 1") @RequestParam("file1") MultipartFile file1,
             @Parameter(description = "File 2") @RequestParam("file2") MultipartFile file2,
@@ -50,14 +52,14 @@ public interface ProductApi {
 
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Delete a product")
-    @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json"))
+    @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductDTO.class)))
     String deleteProduct(
             @Parameter(description = "Product ID") @PathVariable Long id,
             Principal principal
     );
     @GetMapping("/my/products")
     @Operation(summary = "Get user products")
-    @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json"))
+    @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductDTO.class)))
     String userProducts(
             Principal principal,
             Model model
