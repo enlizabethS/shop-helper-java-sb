@@ -5,17 +5,17 @@ import com.shophelperjavasb.shophelperjavasb.auctions.dto.BidDto;
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
 import com.shophelperjavasb.shophelperjavasb.products.dto.ProductDTO;
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseResponseDto;
-import com.shophelperjavasb.shophelperjavasb.users.dto.ProfileDto;
-import com.shophelperjavasb.shophelperjavasb.users.dto.UserDto;
-import com.shophelperjavasb.shophelperjavasb.users.dto.UsersPage;
+import com.shophelperjavasb.shophelperjavasb.users.dto.*;
 import com.shophelperjavasb.shophelperjavasb.users.controllers.api.UsersApi;
 import com.shophelperjavasb.shophelperjavasb.users.model.User;
 import com.shophelperjavasb.shophelperjavasb.users.repositories.UsersRepository;
 import com.shophelperjavasb.shophelperjavasb.users.services.UsersService;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,18 +39,8 @@ public class UsersController implements UsersApi {
     }
 
     @Override
-    public ResponseEntity<String> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
-        User user = usersService.getUserById(userId);
-
-        if (user == null) {
-            return new ResponseEntity<>("User with ID " + userId + " not found", HttpStatus.NOT_FOUND);
-        }
-        // Обновляем данные пользователя
-        user.setUsername(updatedUser.getUsername());
-        user.setEmail(updatedUser.getEmail());
-        usersRepository.save(user);
-
-        return new ResponseEntity<>("User update", HttpStatus.OK);
+    public ResponseEntity<UserResponseDto> updateUser(AuthenticatedUser currentUser, UserUpdateDto updatedUser) {
+        return ResponseEntity.ok(usersService.updateUser(currentUser, updatedUser));
     }
 
     // не менять - получать профиль

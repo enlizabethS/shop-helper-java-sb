@@ -14,9 +14,7 @@ import com.shophelperjavasb.shophelperjavasb.products.repositories.ProductsRepos
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseResponseDto;
 import com.shophelperjavasb.shophelperjavasb.purchases.model.Purchase;
 import com.shophelperjavasb.shophelperjavasb.purchases.repositories.PurchasesRepository;
-import com.shophelperjavasb.shophelperjavasb.users.dto.ProfileDto;
-import com.shophelperjavasb.shophelperjavasb.users.dto.UserDto;
-import com.shophelperjavasb.shophelperjavasb.users.dto.UsersPage;
+import com.shophelperjavasb.shophelperjavasb.users.dto.*;
 import com.shophelperjavasb.shophelperjavasb.users.model.User;
 import com.shophelperjavasb.shophelperjavasb.users.repositories.UsersRepository;
 import com.shophelperjavasb.shophelperjavasb.users.services.UsersService;
@@ -65,6 +63,27 @@ public class UsersServiceImpl implements UsersService {
      @Override
      public User getUserById(Long userId) {
          return usersRepository.getUserById(userId);
+     }
+
+     @Override
+     public UserResponseDto updateUser(AuthenticatedUser currentUser, UserUpdateDto updatedUser) {
+         Long userId = currentUser.getUser().getId();
+
+         User user = usersRepository.findById(userId)
+             .orElseThrow(()->new NotFoundException("User with id <" + userId + "> not found"));
+
+//        if (user == null) {
+//            return new ResponseEntity<>("User with ID " + user.getId() + " not found", HttpStatus.NOT_FOUND);
+//        }
+         // Обновляем данные пользователя
+         user.setFirstName(updatedUser.getFirstName());
+         user.setLastName(updatedUser.getLastName());
+         user.setEmail(updatedUser.getEmail());
+         user.setPhone(updatedUser.getPhone());
+
+         usersRepository.save(user);
+
+         return UserResponseDto.from(user);
      }
 
      // не менять - получать покупки текущего пользователя
