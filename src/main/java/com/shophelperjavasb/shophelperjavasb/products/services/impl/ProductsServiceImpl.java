@@ -2,6 +2,7 @@ package com.shophelperjavasb.shophelperjavasb.products.services.impl;
 
 import com.shophelperjavasb.shophelperjavasb.exceptions.NotFoundException;
 import com.shophelperjavasb.shophelperjavasb.products.dto.ProductDTO;
+import com.shophelperjavasb.shophelperjavasb.products.dto.ProductNameDto;
 import com.shophelperjavasb.shophelperjavasb.products.dto.ProductPage;
 import com.shophelperjavasb.shophelperjavasb.products.dto.ProductProfileDTO;
 import com.shophelperjavasb.shophelperjavasb.products.model.Image;
@@ -27,37 +28,37 @@ public class ProductsServiceImpl implements ProductsService {
     private final UsersRepository usersRepository;
 
     @Override
-    public List<Product> listProducts (String productName) {
-        if (productName != null) return productsRepository.findByName(productName);
-        return productsRepository.findAll();
+    public List<ProductProfileDTO> getProductsByName(ProductNameDto productName) {
+        List<Product> products = productsRepository.findByName(productName.getName());
+
+        return ProductProfileDTO.from(products);
     }
 
     @Override
-    public ProductPage getAll() {
-        List<Product> products = productsRepository.findAll();
-
-        return ProductPage.builder()
-                .products(ProductDTO.from(products))
-                .build();
-    }
-    @Override
-    public ProductProfileDTO getProfile(Long currentProductId){
-        Product product = productsRepository.findById(currentProductId)
-                .orElseThrow(IllegalArgumentException::new);
+    public ProductProfileDTO getById(Long productId) {
+        Product product = productsRepository.findById(productId).get();
 
         return ProductProfileDTO.from(product);
     }
 
     @Override
-    public ProductDTO getProduct(Long productId) {
-        Product product = productsRepository.findById(productId)
-                .orElseThrow(() -> new NotFoundException("Product with id <" + productId+ "> not found"));
+    public ProductDTO getInfoById(Long productId) {
+        Product product = productsRepository.findById(productId).get();
 
         return ProductDTO.from(product);
     }
 
     @Override
-    public void saveProduct(Principal principal, Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {
+    public void deleteById(Long productId) {
+        if (productsRepository.existsById(productId)) {
+            productsRepository.deleteById(productId);
+        } else {
+            throw new NotFoundException("Product <" + productId + "> not found");
+        }
+    }
+
+    @Override
+    public ProductProfileDTO saveProduct(Principal principal, Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {
         product.setUser(getUserByPrincipal(principal));
         Image image1;
         Image image2;
@@ -79,15 +80,15 @@ public class ProductsServiceImpl implements ProductsService {
         Product productFromDb = productsRepository.save(product);
         productFromDb.setPreviewImageId(productFromDb.getImages().get(0).getId());
         productsRepository.save(product);
+
+        return ProductProfileDTO.from(product);
     }
 
-    @Override
     public User getUserByPrincipal (Principal principal) {
         if (principal == null) return new User();
         return usersRepository.findByEmail(principal.getName());
     }
 
-    @Override
     public Image toImageEntity(MultipartFile file) throws IOException {
         Image image = new Image();
         image.setName(file.getName());
@@ -97,26 +98,4 @@ public class ProductsServiceImpl implements ProductsService {
         image.setBytes(file.getBytes());
         return image;
     }
-
-    @Override
-    public void deleteProduct(User user, Long id) {
-        Product product = productsRepository.findById(id)
-                .orElse(null);
-        if (product != null) {
-            if (product.getUser().equals(user.getId())) {
-//                productRepository.delete(product);
-                productsRepository.delete(product);
-                log.info("Product with id = {} was deleted", id);
-            } else {
-                log.error("User: {} haven't this product with id = {}", user.getEmail(), id);
-            }
-        } else {
-            log.error("Product with id = {} is not found", id);
-        }    }
-
-    @Override
-    public Product getProductById(Long id) {
-        return productsRepository.findById(id).orElse(null);
-    }
-
 }
