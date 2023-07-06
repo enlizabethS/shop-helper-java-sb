@@ -89,7 +89,7 @@ public class UsersServiceImpl implements UsersService {
      // не менять - получать покупки текущего пользователя
      @Override
      public List<ProductDTO> getMyProducts(AuthenticatedUser currentUser) {
-         List<Product> products = productsRepository.findAllByUser_Id(currentUser.getUser().getId());
+         List<Product> products = productsRepository.findAllByUserId(currentUser.getUser().getId());
 
          return ProductDTO.from(products);
      }
