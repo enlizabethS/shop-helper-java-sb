@@ -3,6 +3,7 @@ package com.shophelperjavasb.shophelperjavasb.auctions.dto;
 import com.shophelperjavasb.shophelperjavasb.auctions.model.Bid;
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseResponseDto;
 import com.shophelperjavasb.shophelperjavasb.purchases.model.Purchase;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,11 +18,17 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 public class BidDto {
+    @Schema(description = "id of the bid")
     private Long id;
+    @Schema(description = "id of the user who created the bid")
     private Long userId;
+    @Schema(description = "amount of the bid")
     private double amount;
-//    private Long auctionId;
+    @Schema(description = "id of the auction")
+    private Long auctionId;
+    @Schema(description = "date of creation of the bid")
     private LocalDateTime createdDate;
+    @Schema(description = "status of the bid")
     private String status;
 
     public static BidDto from(Bid bid) {
@@ -29,7 +36,7 @@ public class BidDto {
             .id(bid.getId())
             .userId(bid.getUser().getId())
             .amount(bid.getAmount())
-//            .auctionId(bid.getAuction().getId())
+            .auctionId(bid.getAuction().getId())
             .createdDate(bid.getCreatedDate())
             .status(bid.getStatus().name())
             .build();

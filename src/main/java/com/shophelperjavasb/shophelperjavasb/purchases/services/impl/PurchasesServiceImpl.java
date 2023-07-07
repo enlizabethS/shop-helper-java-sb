@@ -78,9 +78,9 @@ public class PurchasesServiceImpl implements PurchasesService {
         Purchase originPurchase = purchasesRepository.findById(purchaseId)
             .orElseThrow(() -> new NotFoundException("Purchase with id <" + purchaseId + "> not found"));
 
-        if (newStatus.equals("CREATED") ||
-            newStatus.equals("PERFORMED") ||
-            newStatus.equals("DONE")
+        if (newStatus.getStatus().equals("CREATED") ||
+            newStatus.getStatus().equals("PERFORMED") ||
+            newStatus.getStatus().equals("DONE")
         ) {
             originPurchase.setStatus(Purchase.Status.valueOf(newStatus.getStatus()));
 

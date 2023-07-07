@@ -4,6 +4,7 @@ import com.shophelperjavasb.shophelperjavasb.auctions.model.Auction;
 import com.shophelperjavasb.shophelperjavasb.auctions.model.Bid;
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseResponseDto;
 import com.shophelperjavasb.shophelperjavasb.purchases.model.Purchase;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,13 +20,21 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 public class AuctionDto {
+    @Schema(description = "id of the auction")
     private Long id;
+    @Schema(description = "id of the user who created the auction")
     private Long userId;
+    @Schema(description = "id of the product that participates in the auction")
     private Long productId;
+    @Schema(description = "date of creation of the auction")
     private LocalDateTime createdDate;
+    @Schema(description = "start date of the auction")
     private LocalDateTime startDate;
+    @Schema(description = "expiration date of the auction")
     private LocalDateTime expirationDate;
+    @Schema(description = "id of the bids participating in the auction")
     private List<Long> bidsId = new ArrayList<>();
+    @Schema(description = "status of the auction")
     private String status;
 
     public static AuctionDto from(Auction auction) {

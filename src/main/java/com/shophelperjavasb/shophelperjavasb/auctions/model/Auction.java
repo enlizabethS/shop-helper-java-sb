@@ -40,7 +40,7 @@ public class Auction {
     private LocalDateTime createdDate;
     private LocalDateTime startDate;
     private LocalDateTime expirationDate;
-    @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Bid> bids = new ArrayList<>();
     @NotNull
     private Status status;
