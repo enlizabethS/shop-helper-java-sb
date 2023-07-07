@@ -1,5 +1,6 @@
 package com.shophelperjavasb.shophelperjavasb.products.dto;
 
+import com.shophelperjavasb.shophelperjavasb.products.model.Image;
 import com.shophelperjavasb.shophelperjavasb.products.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,19 +19,20 @@ public class ProductDTO {
     private String name;
     private int quantity;
     private double price;
+    private String imageUrl;
 
     public static ProductDTO from(Product product) {
-        return ProductDTO.builder()
-            .id(product.getId())
-            .name(product.getName())
-            .quantity(product.getQuantity())
-            .price(product.getPrice())
-            .build();
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setId(product.getId());
+        productDTO.setName(product.getName());
+        productDTO.setQuantity(product.getQuantity());
+        productDTO.setPrice(product.getPrice());
+        return productDTO;
     }
 
     public static List<ProductDTO> from(List<Product> products) {
         return products.stream()
-            .map(ProductDTO::from)
-            .collect(Collectors.toList());
+                .map(ProductDTO::from)
+                .collect(Collectors.toList());
     }
 }

@@ -1,5 +1,6 @@
 package com.shophelperjavasb.shophelperjavasb.products.services;
 
+import com.shophelperjavasb.shophelperjavasb.products.dto.ImageDTO;
 import com.shophelperjavasb.shophelperjavasb.products.dto.ProductDTO;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public interface ProductsService {
 
     ProductDTO getProductInfo(Long id);
 
-    ProductDTO createProduct(ProductDTO productDto);
+    ProductDTO createProductWithImage(ProductDTO productDto);
 
     void deleteProduct(Long id);
 
