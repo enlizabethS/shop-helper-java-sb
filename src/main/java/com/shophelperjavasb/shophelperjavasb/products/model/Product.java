@@ -30,14 +30,22 @@ public class Product {
     @NotNull
     private int quantity;
     private double price;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
-            mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images = new ArrayList<>();
+
     private Long previewImageId;
     private LocalDateTime createdDate;
 
-    public void addImageToProduct(Image image) {
-        image.setProduct(this);
+    public void addImage(Image image) {
+        if (images == null) {
+            images = new ArrayList<>();
+        }
         images.add(image);
+    }
+
+    public void removeImage(Image image) {
+        if (images != null) {
+            images.remove(image);
+        }
     }
 }

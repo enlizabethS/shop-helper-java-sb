@@ -1,33 +1,33 @@
 package com.shophelperjavasb.shophelperjavasb.products.controllers;
 
 import com.shophelperjavasb.shophelperjavasb.products.controllers.api.ImageApi;
-import com.shophelperjavasb.shophelperjavasb.products.model.Image;
-import com.shophelperjavasb.shophelperjavasb.products.repositories.ImageRepository;
+import com.shophelperjavasb.shophelperjavasb.products.dto.ImageDTO;
+import com.shophelperjavasb.shophelperjavasb.products.services.impl.ImageServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.ByteArrayInputStream;
 
 @RestController
 @RequiredArgsConstructor
 public class ImageController implements ImageApi {
-    private final ImageRepository imageRepository;
+    private final ImageServiceImpl imageService;
 
     @Override
-    public ResponseEntity<InputStreamResource> getImageById(@PathVariable Long id) {
-        Image image = imageRepository.findById(id).orElse(null);
-        if (image == null) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<InputStreamResource> getAllImages() {
+        return (ResponseEntity<InputStreamResource>) imageService.getAllImages();
+    }
 
-        return ResponseEntity.ok()
-                .header("fileName", image.getOriginalFileName())
-                .contentType(MediaType.valueOf(image.getContentType()))
-                .contentLength(image.getSize())
-                .body(new InputStreamResource(new ByteArrayInputStream(image.getBytes())));
+    @Override
+    public ImageDTO createImage(ImageDTO imageDto) {
+        return imageService.createImage(imageDto);
+    }
+    @Override
+    public ImageDTO updateImage( Long id,ImageDTO imageDto) {
+        return imageService.updateImage(id, imageDto);
+    }
+    @Override
+    public void deleteImage( Long id) {
+        imageService.deleteImage(id);
     }
 }
