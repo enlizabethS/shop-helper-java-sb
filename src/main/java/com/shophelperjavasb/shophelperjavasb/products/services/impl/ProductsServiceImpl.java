@@ -1,7 +1,9 @@
 package com.shophelperjavasb.shophelperjavasb.products.services.impl;
 
 import com.shophelperjavasb.shophelperjavasb.exceptions.NotFoundException;
+import com.shophelperjavasb.shophelperjavasb.products.dto.ImageDTO;
 import com.shophelperjavasb.shophelperjavasb.products.dto.ProductDTO;
+import com.shophelperjavasb.shophelperjavasb.products.model.Image;
 import com.shophelperjavasb.shophelperjavasb.products.model.Product;
 import com.shophelperjavasb.shophelperjavasb.products.repositories.ProductsRepository;
 import com.shophelperjavasb.shophelperjavasb.products.services.ProductsService;
@@ -31,11 +33,14 @@ public class ProductsServiceImpl implements ProductsService {
             return convertToDto(product);
         }
     @Override
-        public ProductDTO createProduct(ProductDTO productDto) {
-            Product product = convertToEntity(productDto);
-            Product savedProduct = productRepository.save(product);
-            return convertToDto(savedProduct);
-        }
+    public ProductDTO createProductWithImage(ProductDTO product) {
+            ProductDTO productDTO = new ProductDTO();
+            productDTO.setId(product.getId());
+            productDTO.setPrice(product.getPrice());
+            productDTO.setQuantity(product.getQuantity());
+            productDTO.setImageUrl(product.getImageUrl());
+        return productDTO;
+    }
     @Override
         public void deleteProduct(Long id) {
             productRepository.deleteById(id);

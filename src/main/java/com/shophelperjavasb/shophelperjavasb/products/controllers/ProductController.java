@@ -25,7 +25,7 @@ public class ProductController implements ProductApi {
 
     @Override
     public ProductDTO createProduct(ProductDTO productDto) {
-        return productService.createProduct(productDto);
+        return productService.createProductWithImage(productDto);
     }
 
     @Override
