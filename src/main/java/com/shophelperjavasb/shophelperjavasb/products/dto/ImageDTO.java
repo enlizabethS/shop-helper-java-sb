@@ -15,16 +15,15 @@ import java.util.stream.Collectors;
 @Builder
 public class ImageDTO {
     private Long id;
-    private String name;
-    private String originalFileName;
-    private Long size;
+    private String url;
+    private String title;
+
 
     public static ImageDTO from(Image image){
         return ImageDTO.builder()
                 .id(image.getId())
-                .name(image.getName())
-                .originalFileName(image.getOriginalFileName())
-                .size(image.getSize())
+                .title(image.getTitle())
+                .url(image.getUrl())
                 .build();
     }
     public static List<ImageDTO> from(List <Image> images){
