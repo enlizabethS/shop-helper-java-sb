@@ -3,7 +3,6 @@ package com.shophelperjavasb.shophelperjavasb.products.controllers;
 import com.shophelperjavasb.shophelperjavasb.exceptions.NotFoundException;
 import com.shophelperjavasb.shophelperjavasb.products.controllers.api.ImageApi;
 
-import com.shophelperjavasb.shophelperjavasb.products.dto.ImageDto;
 import com.shophelperjavasb.shophelperjavasb.products.model.Image;
 import com.shophelperjavasb.shophelperjavasb.products.repositories.ImagesRepository;
 import com.shophelperjavasb.shophelperjavasb.products.services.ImagesService;
