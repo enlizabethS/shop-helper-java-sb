@@ -26,26 +26,12 @@ public class Product {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
     @NotNull
-    private String name;
+    private String title;
     @NotNull
     private int quantity;
     private double price;
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Image> images = new ArrayList<>();
-
     private Long previewImageId;
     private LocalDateTime createdDate;
-
-    public void addImage(Image image) {
-        if (images == null) {
-            images = new ArrayList<>();
-        }
-        images.add(image);
-    }
-
-    public void removeImage(Image image) {
-        if (images != null) {
-            images.remove(image);
-        }
-    }
 }

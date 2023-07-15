@@ -1,40 +1,47 @@
 package com.shophelperjavasb.shophelperjavasb.products.controllers;
 
+import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
 import com.shophelperjavasb.shophelperjavasb.products.controllers.api.ProductApi;
-import com.shophelperjavasb.shophelperjavasb.products.dto.ProductDTO;
-import com.shophelperjavasb.shophelperjavasb.products.services.impl.ProductsServiceImpl;
+import com.shophelperjavasb.shophelperjavasb.products.dto.ProductDto;
+import com.shophelperjavasb.shophelperjavasb.products.services.ProductsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
 public class ProductController implements ProductApi {
-    private final ProductsServiceImpl productService;
-
-
-    @Override
-    public List<ProductDTO> getAllProducts() {
-        return productService.getAllProducts();
-    }
+    private final ProductsService productService;
 
     @Override
-    public ProductDTO getProductInfo(Long id) {
-        return productService.getProductInfo(id);
+    public ResponseEntity<ProductDto> createProduct(
+        AuthenticatedUser currentUser,
+        String productName,
+        String quantity,
+        String price,
+        MultipartFile file1,
+        MultipartFile file2,
+        MultipartFile file3
+    ) throws IOException {
+        return ResponseEntity.status(201)
+            .body(productService.createProduct(currentUser, productName, quantity, price, file1, file2, file3));
     }
 
-    @Override
-    public ProductDTO createProduct(ProductDTO productDto) {
-        return productService.createProductWithImage(productDto);
-    }
+//    @Override
+//    public List<ProductDto> getAllProducts() {
+//        return productService.getAllProducts();
+//    }
 
-    @Override
-    public void deleteProduct(Long id) {
-        productService.deleteProduct(id);
-    }
+//    @Override
+//    public ProductDto getProductInfo(Long id) {
+//        return productService.getProductInfo(id);
+//    }
 
-    @Override
-    public List<ProductDTO> getUserProducts(Long userId) {
-        return productService.getUserProducts(userId);
-    }
+//    @Override
+//    public void deleteProduct(Long id) {
+//        productService.deleteProduct(id);
+//    }
 }

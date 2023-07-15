@@ -1,7 +1,6 @@
 package com.shophelperjavasb.shophelperjavasb.purchases.dto;
 
 import com.shophelperjavasb.shophelperjavasb.purchases.model.Purchase;
-import com.shophelperjavasb.shophelperjavasb.users.model.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

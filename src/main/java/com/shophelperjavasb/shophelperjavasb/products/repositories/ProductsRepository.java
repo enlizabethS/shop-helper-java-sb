@@ -7,11 +7,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductsRepository extends JpaRepository<Product, Long> {
-    @Override
-    Optional<Product> findById(Long id);
-
-    List<Product> findByName(String productName);
-
-    // не менять - получать продукты текущего пользователя
     List<Product> findAllByUserId(Long userId);
 }

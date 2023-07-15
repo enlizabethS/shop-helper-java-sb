@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 })
 @RequestMapping("/api/auth")
 public interface AuthApi {
-    @Operation(summary = "SignIn")
+    @Operation(summary = "SignUn")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "User",
             content = {
