@@ -1,10 +1,8 @@
 package com.shophelperjavasb.shophelperjavasb.products.controllers;
 
-import com.shophelperjavasb.shophelperjavasb.exceptions.NotFoundException;
 import com.shophelperjavasb.shophelperjavasb.products.controllers.api.ImageApi;
 
-import com.shophelperjavasb.shophelperjavasb.products.model.Image;
-import com.shophelperjavasb.shophelperjavasb.products.repositories.ImagesRepository;
+import com.shophelperjavasb.shophelperjavasb.products.dto.ImageDto;
 import com.shophelperjavasb.shophelperjavasb.products.services.ImagesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
@@ -20,7 +18,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class ImageController implements ImageApi {
     private final ImagesService imagesService;
-    private final ImagesRepository imagesRepository;
 
     @Override
     public ResponseEntity<?> addImg(MultipartFile file) throws IOException {
@@ -30,13 +27,12 @@ public class ImageController implements ImageApi {
 
     @Override
     public ResponseEntity<?> getById(Long imageId) {
-        Image image = imagesRepository.findById(imageId)
-            .orElseThrow(() -> new NotFoundException("Image with id <" + imageId + "> not found"));
+        ImageDto imageDto = imagesService.getById(imageId);
 
         return ResponseEntity.ok()
-            .header("fileName", image.getOriginalFileName())
-            .contentType(MediaType.valueOf(image.getContentType()))
-            .contentLength(image.getSize())
-            .body(new InputStreamResource(new ByteArrayInputStream(image.getBytes())));
+            .header("fileName", imageDto.getOriginalFileName())
+            .contentType(MediaType.valueOf(imageDto.getContentType()))
+            .contentLength(imageDto.getSize())
+            .body(new InputStreamResource(new ByteArrayInputStream(imageDto.getBytes())));
     }
 }

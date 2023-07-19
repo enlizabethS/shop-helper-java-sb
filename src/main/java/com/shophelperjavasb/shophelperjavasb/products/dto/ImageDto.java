@@ -1,7 +1,6 @@
 package com.shophelperjavasb.shophelperjavasb.products.dto;
 
 import com.shophelperjavasb.shophelperjavasb.products.model.Image;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,14 +15,22 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 public class ImageDto {
-    @Schema(defaultValue = "id of the image")
     private Long id;
+    private String name;
+    private String originalFileName;
+    private Long size;
+    private String contentType;
+    private byte[] bytes;
     private LocalDateTime createdDate;
-
 
     public static ImageDto from(Image image) {
         return ImageDto.builder()
             .id(image.getId())
+            .name(image.getName())
+            .originalFileName(image.getOriginalFileName())
+            .size(image.getSize())
+            .contentType(image.getContentType())
+            .bytes(image.getBytes())
             .createdDate(image.getCreatedDate())
             .build();
     }
