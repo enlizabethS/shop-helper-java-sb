@@ -2,8 +2,6 @@ package com.shophelperjavasb.shophelperjavasb.addresses.controllers.api;
 
 import com.shophelperjavasb.shophelperjavasb.addresses.dto.AddressDto;
 import com.shophelperjavasb.shophelperjavasb.addresses.dto.NewAddressDto;
-import com.shophelperjavasb.shophelperjavasb.auctions.dto.AuctionDto;
-import com.shophelperjavasb.shophelperjavasb.auctions.dto.NewAuctionDto;
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

@@ -2,8 +2,6 @@ package com.shophelperjavasb.shophelperjavasb.auctions.dto;
 
 import com.shophelperjavasb.shophelperjavasb.auctions.model.Auction;
 import com.shophelperjavasb.shophelperjavasb.auctions.model.Bid;
-import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseResponseDto;
-import com.shophelperjavasb.shophelperjavasb.purchases.model.Purchase;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
