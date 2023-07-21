@@ -4,10 +4,7 @@ import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
 import com.shophelperjavasb.shophelperjavasb.products.dto.FilterTitleDto;
 import com.shophelperjavasb.shophelperjavasb.products.dto.ProductDto;
 import com.shophelperjavasb.shophelperjavasb.products.dto.ProductPreviewDto;
-import io.swagger.v3.oas.annotations.Parameter;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.List;
 

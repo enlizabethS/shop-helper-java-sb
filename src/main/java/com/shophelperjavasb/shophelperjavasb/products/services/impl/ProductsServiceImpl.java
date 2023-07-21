@@ -92,13 +92,6 @@ public class ProductsServiceImpl implements ProductsService {
         return ProductDto.from(product);
     }
 
-//    @Override
-//    public List<ProductPreviewDto> findByTitle(FilterTitleDto filter) {
-//        List<Product> productsList = productRepository.findAllByTitleContainingIgnoreCase(filter.getTitle());
-//
-//        return ProductPreviewDto.from(productsList);
-//    }
-
     @Override
     public List<ProductPreviewDto> findByTitle(AuthenticatedUser currentUser, FilterTitleDto filter) {
         List<Product> productsList;
