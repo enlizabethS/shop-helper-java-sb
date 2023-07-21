@@ -4,6 +4,8 @@ import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
 import com.shophelperjavasb.shophelperjavasb.products.dto.FilterTitleDto;
 import com.shophelperjavasb.shophelperjavasb.products.dto.ProductDto;
 import com.shophelperjavasb.shophelperjavasb.products.dto.ProductPreviewDto;
+import io.swagger.v3.oas.annotations.Parameter;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -25,5 +27,5 @@ public interface ProductsService {
 
     ProductDto getById(Long productId);
 
-    List<ProductPreviewDto> findByTitle(FilterTitleDto filter);
+    List<ProductPreviewDto> findByTitle(AuthenticatedUser currentUser, FilterTitleDto filter);
 }

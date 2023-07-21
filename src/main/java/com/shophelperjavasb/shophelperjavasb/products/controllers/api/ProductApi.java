@@ -62,7 +62,10 @@ public interface ProductApi {
                     schema = @Schema(implementation = ProductDto.class))})}
     )
     @PostMapping("/find")
-    ResponseEntity<List<ProductPreviewDto>> findProductsByTitle(@RequestBody FilterTitleDto filter);
+    ResponseEntity<List<ProductPreviewDto>> findProductsByTitle(
+        @Parameter(hidden = true) @AuthenticationPrincipal AuthenticatedUser currentUser,
+        @RequestBody FilterTitleDto filter
+    );
 
     @Operation(summary = "Delete product", description = "Delete product by id")
     @ApiResponses(value = {

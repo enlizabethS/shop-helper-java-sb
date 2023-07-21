@@ -11,6 +11,7 @@ import com.shophelperjavasb.shophelperjavasb.products.repositories.ImagesReposit
 import com.shophelperjavasb.shophelperjavasb.products.repositories.ProductsRepository;
 import com.shophelperjavasb.shophelperjavasb.products.services.ProductsService;
 import com.shophelperjavasb.shophelperjavasb.users.model.User;
+import com.shophelperjavasb.shophelperjavasb.users.repositories.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ import java.util.List;
 public class ProductsServiceImpl implements ProductsService {
         private final ProductsRepository productRepository;
         private final ImagesRepository imagesRepository;
+        private final UsersRepository usersRepository;
 
     @Override
     public ProductDto createProduct(
@@ -90,9 +92,25 @@ public class ProductsServiceImpl implements ProductsService {
         return ProductDto.from(product);
     }
 
+//    @Override
+//    public List<ProductPreviewDto> findByTitle(FilterTitleDto filter) {
+//        List<Product> productsList = productRepository.findAllByTitleContainingIgnoreCase(filter.getTitle());
+//
+//        return ProductPreviewDto.from(productsList);
+//    }
+
     @Override
-    public List<ProductPreviewDto> findByTitle(FilterTitleDto filter) {
-        List<Product> productsList = productRepository.findAllByTitleContainingIgnoreCase(filter.getTitle());
+    public List<ProductPreviewDto> findByTitle(AuthenticatedUser currentUser, FilterTitleDto filter) {
+        List<Product> productsList;
+
+        if (currentUser != null) {
+            User user = usersRepository.findById(currentUser.getUser().getId())
+                .orElseThrow(() -> new NotFoundException("Product with id <" + currentUser.getUser().getId() + "> not found"));
+
+            productsList = productRepository.findAllByUserNotAndTitleContainingIgnoreCase(user, filter.getTitle());
+        } else {
+            productsList = productRepository.findAllByTitleContainingIgnoreCase(filter.getTitle());
+        }
 
         return ProductPreviewDto.from(productsList);
     }

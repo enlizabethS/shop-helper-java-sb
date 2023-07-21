@@ -6,8 +6,10 @@ import com.shophelperjavasb.shophelperjavasb.products.dto.FilterTitleDto;
 import com.shophelperjavasb.shophelperjavasb.products.dto.ProductDto;
 import com.shophelperjavasb.shophelperjavasb.products.dto.ProductPreviewDto;
 import com.shophelperjavasb.shophelperjavasb.products.services.ProductsService;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,8 +42,8 @@ public class ProductController implements ProductApi {
     }
 
     @Override
-    public ResponseEntity<List<ProductPreviewDto>> findProductsByTitle(FilterTitleDto filter) {
-        return ResponseEntity.ok(productService.findByTitle(filter));
+    public ResponseEntity<List<ProductPreviewDto>> findProductsByTitle(AuthenticatedUser currentUser, FilterTitleDto filter) {
+        return ResponseEntity.ok(productService.findByTitle(currentUser, filter));
     }
 
     @Override
