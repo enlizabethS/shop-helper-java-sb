@@ -1,12 +1,10 @@
 package com.shophelperjavasb.shophelperjavasb.shippers.services;
 
-import com.shophelperjavasb.shophelperjavasb.exceptions.NotFoundException;
-import com.shophelperjavasb.shophelperjavasb.shippers.dto.ShippersDTO;
+import com.shophelperjavasb.shophelperjavasb.shippers.dto.ShippersDto;
 import com.shophelperjavasb.shophelperjavasb.shippers.model.Shipper;
 import com.shophelperjavasb.shophelperjavasb.shippers.repositories.ShippersRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -18,14 +16,14 @@ public class ShippersService {
     private final ShippersRepository shippersRepository;
 
 
-    public ShippersDTO getShipperById(Long id) {
+    public ShippersDto getShipperById(Long id) {
         Shipper shipper = shippersRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Shipper с ID " + id + " not found"));
 
         return mapShipperToDTO(shipper);
     }
 
-    public ShippersDTO createShipper(ShippersDTO shipperDTO) {
+    public ShippersDto createShipper(ShippersDto shipperDTO) {
         Shipper shipper = new Shipper();
         shipper.setShipperName(shipperDTO.getShipperName());
         shipper.setPhone(shipperDTO.getPhone());
@@ -35,7 +33,7 @@ public class ShippersService {
 
         return mapShipperToDTO(savedShipper);
     }
-    public ShippersDTO updateShipper(Long id, ShippersDTO shipperDTO) {
+    public ShippersDto updateShipper(Long id, ShippersDto shipperDTO) {
         Shipper shipper = shippersRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Shipper с ID " + id + " not found"));
 
@@ -47,8 +45,8 @@ public class ShippersService {
 
         return mapShipperToDTO(updatedShipper);
     }
-    private ShippersDTO mapShipperToDTO(Shipper shipper) {
-        ShippersDTO shipperDTO = new ShippersDTO();
+    private ShippersDto mapShipperToDTO(Shipper shipper) {
+        ShippersDto shipperDTO = new ShippersDto();
         shipperDTO.setId(shipper.getId());
         shipperDTO.setShipperName(shipper.getShipperName());
         shipperDTO.setPhone(shipper.getPhone());

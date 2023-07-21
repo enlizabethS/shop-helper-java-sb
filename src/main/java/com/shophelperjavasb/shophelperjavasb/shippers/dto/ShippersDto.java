@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder
-public class ShippersDTO {
+public class ShippersDto {
     private Long id;
     private String shipperName;
     private String phone;
