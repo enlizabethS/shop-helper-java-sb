@@ -33,5 +33,8 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Image> images = new ArrayList<>();
     private Long previewImageId;
+    @NotNull
     private LocalDateTime createdDate;
+    @NotNull
+    private String description;
 }

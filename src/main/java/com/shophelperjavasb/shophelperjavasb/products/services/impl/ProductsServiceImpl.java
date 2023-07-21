@@ -1,7 +1,10 @@
 package com.shophelperjavasb.shophelperjavasb.products.services.impl;
 
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
+import com.shophelperjavasb.shophelperjavasb.exceptions.NotFoundException;
+import com.shophelperjavasb.shophelperjavasb.products.dto.FilterTitleDto;
 import com.shophelperjavasb.shophelperjavasb.products.dto.ProductDto;
+import com.shophelperjavasb.shophelperjavasb.products.dto.ProductPreviewDto;
 import com.shophelperjavasb.shophelperjavasb.products.model.Image;
 import com.shophelperjavasb.shophelperjavasb.products.model.Product;
 import com.shophelperjavasb.shophelperjavasb.products.repositories.ImagesRepository;
@@ -31,87 +34,75 @@ public class ProductsServiceImpl implements ProductsService {
         String productName,
         String quantity,
         String price,
+        String description,
         MultipartFile file1,
         MultipartFile file2,
         MultipartFile file3
     ) throws IOException {
         User user = currentUser.getUser();
 
-        List<Image> imageList = new ArrayList<>();
-
-        if (file1 != null && file1.getSize() != 0) {
-            Image image1 = Image.toEntity(file1);
-            image1.setPreviewImage(true);
-            Image savedImage1 = imagesRepository.save(image1);
-            imageList.add(savedImage1);
-        }
-        if (file2 != null && file2.getSize() != 0) {
-            Image image2 = Image.toEntity(file2);
-            Image savedImage2 = imagesRepository.save(image2);
-            imageList.add(savedImage2);
-        }
-        if (file3 != null && file3.getSize() != 0) {
-            Image image3 = Image.toEntity(file3);
-            Image savedImage3 = imagesRepository.save(image3);
-            imageList.add(savedImage3);
-        }
-
         Product newProduct = Product.builder()
             .user(user)
             .title(productName)
             .quantity(Integer.parseInt(quantity))
             .price(Double.parseDouble(price))
-            .images(imageList)
-            .previewImageId(imageList.size() > 0 ? imageList.get(0).getId() : null)
+            .description(description)
             .createdDate(LocalDateTime.now())
             .build();
 
-        productRepository.save(newProduct);
+        Product productFromDB = productRepository.save(newProduct);
 
-        return ProductDto.from(newProduct);
+        List<Image> imagesList = new ArrayList<>();
+
+        if (file1 != null && file1.getSize() != 0) {
+            Image image1 = Image.toEntity(file1);
+            image1.setPreviewImage(true);
+            image1.setProduct(productFromDB);
+            Image savedImage1 = imagesRepository.save(image1);
+            imagesList.add(savedImage1);
+        }
+        if (file2 != null && file2.getSize() != 0) {
+            Image image2 = Image.toEntity(file2);
+            image2.setProduct(productFromDB);
+            Image savedImage2 = imagesRepository.save(image2);
+            imagesList.add(savedImage2);
+        }
+        if (file3 != null && file3.getSize() != 0) {
+            Image image3 = Image.toEntity(file3);
+            image3.setProduct(productFromDB);
+            Image savedImage3 = imagesRepository.save(image3);
+            imagesList.add(savedImage3);
+        }
+
+        productFromDB.setImages(imagesList);
+        productFromDB.setPreviewImageId(imagesList.size() > 0 ? imagesList.get(0).getId() : null);
+
+        productRepository.save(productFromDB);
+
+        return ProductDto.from(productFromDB);
     }
-//        private final ImageServiceImpl imageService;
-//        @Override
-//        public List<ProductDTO> getAllProducts() {
-//            List<Product> products = productRepository.findAll();
-//            return products.stream()
-//                    .map(this::convertToDto)
-//                    .collect(Collectors.toList());
-//        }
 
-//    @Override
-//        public ProductDTO getProductInfo(Long id) {
-//            Product product = productRepository.findById(id).orElseThrow(() -> new NotFoundException("Product not found"));
-//            return convertToDto(product);
-//        }
+    @Override
+    public ProductDto getById(Long productId) {
+        Product product = productRepository.findById(productId)
+            .orElseThrow(() -> new NotFoundException("Product with id <" + productId + "> not found"));
 
-//    @Override
-//        public void deleteProduct(Long id) {
-//            productRepository.deleteById(id);
-//        }
-
-//    @Override
-//        public List<ProductDTO> getUserProducts(Long userId) {
-//            List<Product> userProducts = productRepository.findAllByUserId(userId);
-//            return userProducts.stream()
-//                    .map(this::convertToDto)
-//                    .collect(Collectors.toList());
-//        }
-
-//        private ProductDTO convertToDto(Product product) {
-//            ProductDTO productDto = new ProductDTO();
-//            productDto.setId(product.getId());
-//            productDto.setName(product.getName());
-//           productDto.setPrice(product.getPrice());
-//           productDto.setQuantity(product.getQuantity());
-//            return productDto;
-//        }
-
-//        private Product convertToEntity(ProductDTO productDto) {
-//            Product product = new Product();
-//            product.setName(productDto.getName());
-//            productDto.setPrice(product.getPrice());
-//            productDto.setQuantity(product.getQuantity());
-//            return product;
-//        }
+        return ProductDto.from(product);
     }
+
+    @Override
+    public List<ProductPreviewDto> findByTitle(FilterTitleDto filter) {
+        List<Product> productsList = productRepository.findAllByTitleContainingIgnoreCase(filter.getTitle());
+
+        return ProductPreviewDto.from(productsList);
+    }
+
+    @Override
+    public void delete(Long productId) {
+        if (productRepository.existsById(productId)) {
+            productRepository.deleteById(productId);
+        } else {
+            throw new NotFoundException("Address <" + productId + "> not found");
+        }
+    }
+}

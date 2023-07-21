@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ProductsRepository extends JpaRepository<Product, Long> {
-    List<Product> findAllByUserId(Long userId);
+    List<Product> findAllByUser_Id(Long userId);
+    List<Product> findAllByTitleContainingIgnoreCase(String productName);
 }
