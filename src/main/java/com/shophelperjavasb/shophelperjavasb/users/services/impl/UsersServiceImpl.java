@@ -42,7 +42,6 @@ public class UsersServiceImpl implements UsersService {
                  .build();
      }
 
-     // не менять - получать профиль
      @Override
      public ProfileDto getProfile(Long currentUserId) {
          User user = usersRepository.findById(currentUserId)
@@ -51,7 +50,6 @@ public class UsersServiceImpl implements UsersService {
          return ProfileDto.from(user);
      }
 
-     // не менять - получать продукты текущего пользователя
      @Override
      public UserDto getUser(Long userId) {
          User user = usersRepository.findById(userId)

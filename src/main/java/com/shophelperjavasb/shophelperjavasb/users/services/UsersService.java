@@ -17,8 +17,6 @@ public interface UsersService {
 
     UserDto getUser(Long userId);
 
-    User getUserById(Long userId);
-
     UserResponseDto updateUser(AuthenticatedUser currentUser, UserUpdateDto updatedUser);
 
     List<ProductPreviewDto> getMyProducts(AuthenticatedUser currentUser);
