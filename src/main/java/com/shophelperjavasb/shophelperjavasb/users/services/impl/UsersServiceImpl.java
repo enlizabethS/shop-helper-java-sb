@@ -8,7 +8,7 @@ import com.shophelperjavasb.shophelperjavasb.auctions.repositories.AuctionsRepos
 import com.shophelperjavasb.shophelperjavasb.auctions.repositories.BidsRepository;
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
 import com.shophelperjavasb.shophelperjavasb.exceptions.NotFoundException;
-import com.shophelperjavasb.shophelperjavasb.products.dto.ProductDTO;
+import com.shophelperjavasb.shophelperjavasb.products.dto.ProductPreviewDto;
 import com.shophelperjavasb.shophelperjavasb.products.model.Product;
 import com.shophelperjavasb.shophelperjavasb.products.repositories.ProductsRepository;
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseResponseDto;
@@ -72,10 +72,6 @@ public class UsersServiceImpl implements UsersService {
          User user = usersRepository.findById(userId)
              .orElseThrow(()->new NotFoundException("User with id <" + userId + "> not found"));
 
-//        if (user == null) {
-//            return new ResponseEntity<>("User with ID " + user.getId() + " not found", HttpStatus.NOT_FOUND);
-//        }
-         // Обновляем данные пользователя
          user.setFirstName(updatedUser.getFirstName());
          user.setLastName(updatedUser.getLastName());
          user.setEmail(updatedUser.getEmail());
@@ -86,15 +82,13 @@ public class UsersServiceImpl implements UsersService {
          return UserResponseDto.from(user);
      }
 
-     // не менять - получать покупки текущего пользователя
      @Override
-     public List<ProductDTO> getMyProducts(AuthenticatedUser currentUser) {
-         List<Product> products = productsRepository.findAllByUserId(currentUser.getUser().getId());
+     public List<ProductPreviewDto> getMyProducts(AuthenticatedUser currentUser) {
+         List<Product> products = productsRepository.findAllByUser_Id(currentUser.getUser().getId());
 
-         return ProductDTO.from(products);
+         return ProductPreviewDto.from(products);
      }
 
-     // не менять - получать аукционы текущего пользователя
      @Override
      public List<PurchaseResponseDto> getMyPurchases(AuthenticatedUser currentUser) {
          List<Purchase> purchases = purchasesRepository.findAllByUser_Id(currentUser.getUser().getId());
@@ -102,7 +96,6 @@ public class UsersServiceImpl implements UsersService {
          return PurchaseResponseDto.from(purchases);
      }
 
-     // не менять - получать аукционы текущего пользователя
      @Override
      public List<AuctionDto> getMyAuctions(AuthenticatedUser currentUser) {
          List<Auction> auctions = auctionsRepository.findAllByUser_Id(currentUser.getUser().getId());
@@ -110,7 +103,6 @@ public class UsersServiceImpl implements UsersService {
          return AuctionDto.from(auctions);
      }
 
-     // не менять - получать ставки текущего пользователя
      @Override
      public List<BidDto> getMyBids(AuthenticatedUser currentUser) {
          List<Bid> bids = bidsRepository.findAllByUser_Id(currentUser.getUser().getId());

@@ -3,10 +3,9 @@ package com.shophelperjavasb.shophelperjavasb.users.controllers.api;
 import com.shophelperjavasb.shophelperjavasb.auctions.dto.AuctionDto;
 import com.shophelperjavasb.shophelperjavasb.auctions.dto.BidDto;
 import com.shophelperjavasb.shophelperjavasb.config.details.AuthenticatedUser;
-import com.shophelperjavasb.shophelperjavasb.products.dto.ProductDTO;
+import com.shophelperjavasb.shophelperjavasb.products.dto.ProductPreviewDto;
 import com.shophelperjavasb.shophelperjavasb.purchases.dto.PurchaseResponseDto;
 import com.shophelperjavasb.shophelperjavasb.users.dto.*;
-import com.shophelperjavasb.shophelperjavasb.users.model.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -62,7 +61,6 @@ public interface UsersApi {
     @PutMapping("/{userId}")
     ResponseEntity<UserResponseDto> updateUser(@Parameter(hidden = true) @AuthenticationPrincipal AuthenticatedUser currentUser, @RequestBody UserUpdateDto updatedUser);
 
-    // не менять - получать профиль
     @Operation(summary = "Profile")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Get profile",
@@ -75,20 +73,18 @@ public interface UsersApi {
     @GetMapping("/my/profile")
     ResponseEntity<ProfileDto> getProfile(@Parameter(hidden = true) @AuthenticationPrincipal AuthenticatedUser currentUser);
 
-    // не менять - получать продукты текущего пользователя
     @Operation(summary = "Products")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Get all products of the user",
             content = {
                 @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ProductDTO.class))
+                    schema = @Schema(implementation = ProductPreviewDto.class))
             }
         )
     })
     @GetMapping("/my/products")
-    ResponseEntity<List<ProductDTO>> getMyProducts(@Parameter(hidden = true) @AuthenticationPrincipal AuthenticatedUser currentUser);
+    ResponseEntity<List<ProductPreviewDto>> getMyProducts(@Parameter(hidden = true) @AuthenticationPrincipal AuthenticatedUser currentUser);
 
-    // не менять - получать покупки текущего пользователя
     @Operation(summary = "Purchases")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Get all purchases of the user",
@@ -101,7 +97,6 @@ public interface UsersApi {
     @GetMapping("/my/purchases")
     ResponseEntity<List<PurchaseResponseDto>> getMyPurchases(@Parameter(hidden = true) @AuthenticationPrincipal AuthenticatedUser currentUser);
 
-    // не менять - получать аукционы текущего пользователя
     @Operation(summary = "Auctions")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Get all auctions of the user",
@@ -114,7 +109,6 @@ public interface UsersApi {
     @GetMapping("/my/auctions")
     ResponseEntity<List<AuctionDto>> getMyAuctions(@Parameter(hidden = true) @AuthenticationPrincipal AuthenticatedUser currentUser);
 
-    // не менять - получать ставки текущего пользователя
     @Operation(summary = "Bids")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Get all bids of the user",
