@@ -19,4 +19,6 @@ public class NewAuctionDto {
     private LocalDateTime startDate;
     @Schema(description = "expiration date of the auction")
     private LocalDateTime expirationDate;
+    @Schema(description = "step up bid")
+    private int step;
 }

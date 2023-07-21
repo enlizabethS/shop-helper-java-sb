@@ -54,7 +54,7 @@ public interface AddressesApi {
     @PutMapping("/{address-id}")
     ResponseEntity<AddressDto> update(@PathVariable("address-id") Long addressId, @RequestBody NewAddressDto newAddressDto);
 
-    @Operation(summary = "Delete addresses", description = "Delete address by id")
+    @Operation(summary = "Delete address", description = "Delete address by id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Delete address by id",
             content = {

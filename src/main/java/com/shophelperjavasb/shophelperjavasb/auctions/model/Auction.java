@@ -44,4 +44,5 @@ public class Auction {
     private List<Bid> bids = new ArrayList<>();
     @NotNull
     private Status status;
+    private int step;
 }

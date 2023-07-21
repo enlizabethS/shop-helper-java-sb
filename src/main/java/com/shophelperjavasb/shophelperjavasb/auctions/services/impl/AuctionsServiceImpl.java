@@ -43,6 +43,7 @@ public class AuctionsServiceImpl implements AuctionsService {
             .expirationDate(newAuctionDto.getExpirationDate())
             .bids(new ArrayList<>())
             .status(Auction.Status.CREATED)
+            .step(newAuctionDto.getStep())
             .build();
 
         auctionsRepository.save(auction);
@@ -63,9 +64,9 @@ public class AuctionsServiceImpl implements AuctionsService {
         Auction auction = auctionsRepository.findById(auctionId)
             .orElseThrow(() -> new NotFoundException("Auction with id <" + auctionId + "> not found"));
 
-        if (newStatus.equals("CREATED") ||
-            newStatus.equals("PERFORMED") ||
-            newStatus.equals("DONE")
+        if (newStatus.getStatus().equals("CREATED") ||
+            newStatus.getStatus().equals("PERFORMED") ||
+            newStatus.getStatus().equals("DONE")
         ) {
             auction.setStatus(Auction.Status.valueOf(newStatus.getStatus()));
 

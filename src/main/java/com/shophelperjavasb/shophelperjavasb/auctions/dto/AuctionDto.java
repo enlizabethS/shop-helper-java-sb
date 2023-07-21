@@ -36,6 +36,8 @@ public class AuctionDto {
     private List<Long> bidsId = new ArrayList<>();
     @Schema(description = "status of the auction")
     private String status;
+    @Schema(description = "step up bid")
+    private int step;
 
     public static AuctionDto from(Auction auction) {
         return AuctionDto.builder()
@@ -49,6 +51,7 @@ public class AuctionDto {
                 ? auction.getBids().stream().map(Bid::getId).collect(Collectors.toList())
                 : null)
             .status(auction.getStatus().name())
+            .step(auction.getStep())
             .build();
     }
 
