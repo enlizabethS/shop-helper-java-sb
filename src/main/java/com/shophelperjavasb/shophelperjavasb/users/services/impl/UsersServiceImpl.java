@@ -61,11 +61,6 @@ public class UsersServiceImpl implements UsersService {
      }
 
      @Override
-     public User getUserById(Long userId) {
-         return usersRepository.getUserById(userId);
-     }
-
-     @Override
      public UserResponseDto updateUser(AuthenticatedUser currentUser, UserUpdateDto updatedUser) {
          Long userId = currentUser.getUser().getId();
 
